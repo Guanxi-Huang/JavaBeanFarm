@@ -70,15 +70,14 @@ public class WorldBuilder {
 
         final List<Tile> tiles = new ArrayList<>();
         for (int row = 0; row < numberOfTiles; row++) {
-            char[] currentRow = lines[row].toCharArray();
+            char[] currentRow = lines[row].trim().toCharArray();
 
             if (currentRow.length != numberOfTiles) {
                 throw new WorldLoadException(
                         "Expected "
                                 + numberOfTiles
                                 + " characters to match the given dimensions but got "
-                                + currentRow.length,
-                        row);
+                                + currentRow.length, row);
             }
 
             for (int col = 0; col < numberOfTiles; col++) {
