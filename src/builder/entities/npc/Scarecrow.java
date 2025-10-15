@@ -12,11 +12,21 @@ import engine.art.sprites.SpriteGroup;
 
 import java.util.ArrayList;
 
+/**
+ * The type Scarecrow.
+ */
 public class Scarecrow extends Npc {
 
     public static final int COIN_COST = 2;
     private static final SpriteGroup art = SpriteGallery.scarecrow;
 
+    /**
+     * Instantiates a new Scarecrow.
+     *
+     * @param x the initialized x-coordinate of Scarecrow
+     * @param y the initialized y-coordinate of Scarecrow
+     * Initialize the sprite and speed of Scarecrow
+     */
     public Scarecrow(int x, int y) {
         super(x, y);
         this.setSprite(art.getSprite("default"));
