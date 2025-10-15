@@ -28,7 +28,8 @@ public class Main {
     public static void main(String[] args) throws IOException, WorldLoadException {
         Dimensions dimensions = new TileGrid(TILES_PER_ROW, SIZE);
         Game game =
-                new JavaBeanFarm(dimensions, new FileReader("resources/uqLogo.map"), new FileReader("resources/uqLogo.details"));
+                new JavaBeanFarm(dimensions, new FileReader("resources/uqLogo.map"),
+                        new FileReader("resources/uqLogo.details"));
         Engine engine = new Engine(game, dimensions);
 
         // Optionally uncomment this line to turn on debug mode

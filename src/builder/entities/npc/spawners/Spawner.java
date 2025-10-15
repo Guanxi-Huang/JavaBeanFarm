@@ -13,20 +13,20 @@ import engine.timing.TickTimer;
  */
 public interface Spawner extends HasPosition, Tickable {
 
-    public TickTimer getTimer();
+    TickTimer getTimer();
 
     @Override
-    public void tick(EngineState state, GameState game);
+    void tick(EngineState state, GameState game);
 
     @Override
-    public int getX();
+    int getX();
 
     @Override
-    public void setX(int x);
+    void setX(int x);
 
     @Override
-    public int getY();
+    int getY();
 
     @Override
-    public void setY(int y);
+    void setY(int y);
 }
