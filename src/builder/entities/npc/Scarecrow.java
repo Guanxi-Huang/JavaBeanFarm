@@ -42,30 +42,13 @@ public class Scarecrow extends Npc {
     public void interact(EngineState state, GameState game) {
         super.interact(state, game);
         EnemyManager enemies = game.getEnemies();
-        final ArrayList<Magpie> magpies = new ArrayList<>();
-        final ArrayList<Pigeon> pigeons = new ArrayList<>();
-        for (Enemy bird : enemies.Birds) {
-            if (bird instanceof Magpie) {
-                magpies.add((Magpie) bird);
-            }
-            if (bird instanceof Pigeon) {
-                pigeons.add((Pigeon) bird);
-            }
-        }
-
         final int scareRadius = state.getDimensions().tileSize() * 4;
 
-        for (Magpie magpie : magpies) {
-            if (this.distanceFrom(magpie) < scareRadius) {
-                magpie.setAttacking(false);
-                // trigger the scare animation
-            }
-        }
-
-        for (Pigeon pigeon : pigeons) {
-            if (this.distanceFrom(pigeon) < scareRadius) {
-                pigeon.setAttacking(false);
-                // trigger the scare animation
+        for (Enemy enemy : enemies.Birds) {
+            if (enemy instanceof Magpie || enemy instanceof Pigeon) {
+                if (this.distanceFrom(enemy) < scareRadius) {
+                    enemy.setAttacking(false);
+                }
             }
         }
     }
