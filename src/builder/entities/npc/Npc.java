@@ -61,21 +61,19 @@ public class Npc extends Entity implements Interactable, Tickable, Directable {
      * @return integer representation for how far apart they are
      */
     public int distanceFrom(HasPosition position) {
-        int deltaX = position.getX() - this.getX();
-        int deltaY = position.getY() - this.getY();
-        return (int) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        return distanceFrom(position.getX(), position.getY());
     }
 
     /**
      * Return how far away this npc is from the given position
      *
-     * @param xCoordinate - x coordinate
-     * @param yCoordinate - y coordinate
+     * @param x - x coordinate
+     * @param y - y coordinate
      * @return integer representation for how far apart they are
      */
-    public int distanceFrom(int xCoordinate, int yCoordinate) {
-        int deltaX = xCoordinate - this.getX();
-        int deltaY = yCoordinate - this.getY();
+    public int distanceFrom(int x, int y) {
+        int deltaX = x - this.getX();
+        int deltaY = y - this.getY();
         return (int) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     }
 }
