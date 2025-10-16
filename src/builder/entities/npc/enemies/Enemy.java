@@ -4,10 +4,23 @@ import builder.GameState;
 import builder.entities.npc.Npc;
 
 import engine.EngineState;
+import engine.timing.FixedTimer;
 
-public class Enemy extends Npc {
+public abstract class Enemy extends Npc {
+
+    private FixedTimer lifespan;
+
     public Enemy(int x, int y) {
         super(x, y);
+    }
+
+    public FixedTimer getLifespan() {
+        return lifespan;
+    }
+
+
+    public void setLifespan(FixedTimer timer) {
+        this.lifespan = timer;
     }
 
     @Override

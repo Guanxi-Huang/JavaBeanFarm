@@ -31,6 +31,7 @@ public class Eagle extends Enemy implements Expirable {
         this.trackedTarget = trackedTarget;
 
         this.setSprite(art.getSprite("default"));
+        setLifespan(new FixedTimer(5000));
 
         if (attacking) {
             double deltaX = trackedTarget.getX() - this.getX();
@@ -41,16 +42,6 @@ public class Eagle extends Enemy implements Expirable {
             double deltaY = trackedTarget.getY() - this.getY();
             this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
         }
-    }
-
-    @Override
-    public FixedTimer getLifespan() {
-        return lifespan;
-    }
-
-    @Override
-    public void setLifespan(FixedTimer timer) {
-        this.lifespan = timer;
     }
 
     @Override

@@ -14,7 +14,6 @@ import engine.timing.RepeatingTimer;
 public class Magpie extends Enemy implements Expirable {
 
     private static final SpriteGroup art = SpriteGallery.magpie;
-    private FixedTimer lifespan = new FixedTimer(10000);
     public HasPosition trackedTarget;
     public Boolean attacking;
     public int coins = 0;
@@ -31,6 +30,7 @@ public class Magpie extends Enemy implements Expirable {
         this.trackedTarget = trackedTarget;
         this.setSprite(art.getSprite("down"));
         this.attacking = true;
+        setLifespan(new FixedTimer(10000));
 
         double deltaX = trackedTarget.getX() - this.getX();
         double deltaY = trackedTarget.getY() - this.getY();
@@ -38,20 +38,10 @@ public class Magpie extends Enemy implements Expirable {
     }
 
     @Override
-    public FixedTimer getLifespan() {
-        return lifespan;
-    }
-
-    @Override
-    public void setLifespan(FixedTimer timer) {
-        this.lifespan = timer;
-    }
-
-    @Override
     public void tick(EngineState engine, GameState game) {
         super.tick(engine, game);
-        this.lifespan.tick();
-        if (this.lifespan.isFinished()) {
+        this.getLifespan().tick();
+        if (this.getLifespan().isFinished()) {
             this.markForRemoval();
         }
         if (this.attacking) {

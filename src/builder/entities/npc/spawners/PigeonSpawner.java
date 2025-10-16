@@ -22,11 +22,10 @@ public class PigeonSpawner extends SetSpawner {
 
     @Override
     public void tick(EngineState state, GameState game) {
-        this.timer.tick();
+        getTimer().tick();
 
         List<Tile> tiles =
-                game.getWorld()
-                        .tileSelector(
+                game.getWorld().tileSelector(
                                 tile -> {
                                     for (Entity entity : tile.getStackedEntities()) {
                                         if (entity instanceof Cabbage) {
@@ -36,7 +35,7 @@ public class PigeonSpawner extends SetSpawner {
                                     return false;
                                 });
 
-        if (tiles.size() > 0) {
+        if (!tiles.isEmpty()) {
             int distance = this.distanceFrom(tiles.getFirst());
             Tile closest = tiles.getFirst();
             for (Tile tile : tiles) {
@@ -55,7 +54,6 @@ public class PigeonSpawner extends SetSpawner {
 
     @Override
     protected void spawn(GameState game) {
-
     }
 
     /**
@@ -70,3 +68,4 @@ public class PigeonSpawner extends SetSpawner {
         return (int) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     }
 }
+

@@ -17,7 +17,6 @@ import java.util.List;
 public class Pigeon extends Enemy implements Expirable {
 
     private static final SpriteGroup art = SpriteGallery.pigeon;
-    private FixedTimer lifespan = new FixedTimer(3000);
     private HasPosition trackedTarget;
     public Boolean attacking = true;
     private int spawnX = 0;
@@ -28,6 +27,7 @@ public class Pigeon extends Enemy implements Expirable {
         this.spawnX = x;
         this.spawnY = y;
         setSprite(art.getSprite("down"));
+        setLifespan(new FixedTimer(3000));
     }
 
     public Pigeon(int x, int y, HasPosition trackedTarget) {
@@ -37,16 +37,7 @@ public class Pigeon extends Enemy implements Expirable {
         this.trackedTarget = trackedTarget;
         this.setSpeed(1);
         setSprite(art.getSprite("down"));
-    }
-
-    @Override
-    public FixedTimer getLifespan() {
-        return lifespan;
-    }
-
-    @Override
-    public void setLifespan(FixedTimer timer) {
-        this.lifespan = timer;
+        setLifespan(new FixedTimer(3000));
     }
 
     @Override
@@ -90,8 +81,8 @@ public class Pigeon extends Enemy implements Expirable {
         } else {
             // do nothing
         }
-        this.lifespan.tick();
-        if (this.lifespan.isFinished()) {
+        this.getLifespan().tick();
+        if (this.getLifespan().isFinished()) {
             this.markForRemoval();
         } else {
             // do nothing

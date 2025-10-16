@@ -9,9 +9,9 @@ import engine.timing.TickTimer;
  * The type Set spawner.
  */
 public abstract class SetSpawner implements Spawner {
-    protected int x;
-    protected int y;
-    protected TickTimer timer;
+    private int x = 0;
+    private int y = 0;
+    private TickTimer timer;
 
     public SetSpawner(int x, int y, int duration) {
         this.x = x;
