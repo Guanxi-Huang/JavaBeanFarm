@@ -21,12 +21,9 @@ public class Magpie extends Enemy implements Expirable {
     public Magpie(int x, int y, HasPosition trackedTarget) {
         super(x, y);
         setTrackedTarget(trackedTarget);
-        this.setSprite(art.getSprite("down"));
+        setSprite(art.getSprite("down"));
         setLifespan(new FixedTimer(10000));
-
-        double deltaX = trackedTarget.getX() - this.getX();
-        double deltaY = trackedTarget.getY() - this.getY();
-        this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
+        setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
     }
 
     @Override
@@ -37,19 +34,14 @@ public class Magpie extends Enemy implements Expirable {
             this.markForRemoval();
         }
         if (isAttacking()) {
-            double deltaX = getTrackedTarget().getX() - this.getX();
-            double deltaY = getTrackedTarget().getY() - this.getY();
-            this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
-            /** target is below */
+            setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
             if (getTrackedTarget().getY() > this.getY()) {
                 this.setSprite(art.getSprite("down"));
             } else {
                 this.setSprite(art.getSprite("up"));
             }
         } else {
-            double deltaX = getSpawnX() - this.getX();
-            double deltaY = getSpawnY() - this.getY();
-            this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
+            setTargetDirection(getSpawnX(), getSpawnY());
             if (getSpawnX() < this.getY()) {
                 this.setSprite(art.getSprite("up"));
             } else {

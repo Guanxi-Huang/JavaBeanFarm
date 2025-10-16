@@ -59,6 +59,13 @@ public abstract class Enemy extends Npc {
         this.trackedTarget = trackedTarget;
     }
 
+    public void setTargetDirection(double x, double y) {
+        double deltaX = x - this.getX();
+        double deltaY = y - this.getY();
+        this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
+    }
+
+
     @Override
     public void tick(EngineState state, GameState game) {
         super.tick(state, game);

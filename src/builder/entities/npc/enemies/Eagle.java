@@ -24,16 +24,7 @@ public class Eagle extends Enemy implements Expirable {
         setTrackedTarget(trackedTarget);
         setSprite(art.getSprite("default"));
         setLifespan(new FixedTimer(5000));
-
-        if (isAttacking()) {
-            double deltaX = trackedTarget.getX() - this.getX();
-            double deltaY = trackedTarget.getY() - this.getY();
-            this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
-        } else {
-            double deltaX = trackedTarget.getX() - this.getX();
-            double deltaY = trackedTarget.getY() - this.getY();
-            this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
-        }
+        setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
     }
 
     @Override
@@ -62,18 +53,14 @@ public class Eagle extends Enemy implements Expirable {
         this.move();
 
         if (isAttacking()) {
-            double deltaX = getTrackedTarget().getX() - this.getX();
-            double deltaY = getTrackedTarget().getY() - this.getY();
-            this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
+            setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
             if (getTrackedTarget().getY() > this.getY()) {
                 this.setSprite(art.getSprite("down"));
             } else {
                 this.setSprite(art.getSprite("up"));
             }
         } else {
-            double deltaX = getSpawnX() - this.getX();
-            double deltaY = getSpawnY() - this.getY();
-            this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
+            setTargetDirection(getSpawnX(), getSpawnY());
             if (getSpawnY() < this.getY()) {
                 this.setSprite(art.getSprite("up"));
             } else {
