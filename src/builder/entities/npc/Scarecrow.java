@@ -57,14 +57,14 @@ public class Scarecrow extends Npc {
 
         for (Magpie magpie : magpies) {
             if (this.distanceFrom(magpie) < scareRadius) {
-                magpie.attacking = false;
+                magpie.setAttacking(false);
                 // trigger the scare animation
             }
         }
 
         for (Pigeon pigeon : pigeons) {
             if (this.distanceFrom(pigeon) < scareRadius) {
-                pigeon.attacking = false;
+                pigeon.setAttacking(false);
                 // trigger the scare animation
             }
         }

@@ -17,25 +17,17 @@ import java.util.List;
 public class Pigeon extends Enemy implements Expirable {
 
     private static final SpriteGroup art = SpriteGallery.pigeon;
-    private HasPosition trackedTarget;
-    public Boolean attacking = true;
-    private int spawnX = 0;
-    private int spawnY = 0;
 
     public Pigeon(int x, int y) {
         super(x, y);
-        this.spawnX = x;
-        this.spawnY = y;
         setSprite(art.getSprite("down"));
         setLifespan(new FixedTimer(3000));
     }
 
     public Pigeon(int x, int y, HasPosition trackedTarget) {
         super(x, y);
-        this.spawnX = x;
-        this.spawnY = y;
-        this.trackedTarget = trackedTarget;
         this.setSpeed(1);
+        setTrackedTarget(trackedTarget);
         setSprite(art.getSprite("down"));
         setLifespan(new FixedTimer(3000));
     }
@@ -43,30 +35,29 @@ public class Pigeon extends Enemy implements Expirable {
     @Override
     public void tick(EngineState engine, GameState game) {
         super.tick(engine, game);
-        if (!this.attacking) {
-            double deltaX = (this.spawnX - this.getX());
-            double deltaY = (this.spawnY - this.getY());
+        if (!isAttacking()) {
+            double deltaX = (getSpawnX() - this.getX());
+            double deltaY = (getSpawnY() - this.getY());
             this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
 
-            if (this.distanceFrom(this.spawnX, this.spawnY)
+            if (this.distanceFrom(getSpawnX(), getSpawnY())
                     < engine.getDimensions().tileSize()) { // get close to spawn
                 this.markForRemoval();
             }
-            if (this.spawnY < this.getY()) {
+            if (getSpawnY() < this.getY()) {
                 this.setSprite(art.getSprite("up"));
             } else {
                 this.setSprite(art.getSprite("down"));
             }
         }
         this.move();
-        if (this.trackedTarget == null
-                && this
-                        .attacking) { // if the pigeon has no target, it should go to the center of
+        if (getTrackedTarget() == null
+                && isAttacking()) { // if the pigeon has no target, it should go to the center of
                                       // the screen if its hunting
             double deltaX = ((double) engine.getDimensions().windowSize() / 2 - this.getX());
             double deltaY = ((double) engine.getDimensions().windowSize() / 2 - this.getY());
             this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
-            if (trackedTarget.getY() > this.getY()) {
+            if (getTrackedTarget().getY() > this.getY()) {
                 this.setSprite(art.getSprite("down"));
             } else {
                 this.setSprite(art.getSprite("up"));
@@ -74,9 +65,9 @@ public class Pigeon extends Enemy implements Expirable {
         } else {
             // do nothing
         }
-        if (this.trackedTarget != null && this.attacking) {
-            double deltaX = (this.trackedTarget.getX() - this.getX());
-            double deltaY = (this.trackedTarget.getY() - this.getY());
+        if (getTrackedTarget() != null && isAttacking()) {
+            double deltaX = (getTrackedTarget().getX() - this.getX());
+            double deltaY = (getTrackedTarget().getY() - this.getY());
             this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
         } else {
             // do nothing
@@ -87,11 +78,11 @@ public class Pigeon extends Enemy implements Expirable {
         } else {
             // do nothing
         }
-        if (!attacking) {
-            if (this.distanceFrom(spawnX, spawnY) < engine.getDimensions().tileSize()) {
+        if (!isAttacking()) {
+            if (this.distanceFrom(getSpawnX(), getSpawnY()) < engine.getDimensions().tileSize()) {
                 this.markForRemoval();
             }
-            if (this.spawnY < this.getY()) {
+            if (getSpawnY() < this.getY()) {
                 this.setSprite(art.getSprite("up"));
             } else {
                 this.setSprite(art.getSprite("down"));
@@ -121,21 +112,21 @@ public class Pigeon extends Enemy implements Expirable {
                     // do nothing
                 }
             }
-            this.trackedTarget = closest;
+            setTrackedTarget(closest);
 
-            if (this.attacking
-                    && this.distanceFrom(this.trackedTarget) < engine.getDimensions().tileSize()) {
+            if (isAttacking()
+                    && this.distanceFrom(getTrackedTarget()) < engine.getDimensions().tileSize()) {
                 for (Entity entity : closest.getStackedEntities()) {
                     if (entity instanceof Cabbage cabbage) {
                         cabbage.markForRemoval();
-                        this.attacking = false;
+                        setAttacking(false);
                     } else {
                         // do nothing
                     }
                 }
             }
         } else { // no cabbages to get
-            this.attacking = false;
+            setAttacking(false);
         }
     }
 }
