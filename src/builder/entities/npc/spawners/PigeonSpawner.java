@@ -7,32 +7,17 @@ import builder.entities.tiles.Tile;
 import engine.EngineState;
 import engine.game.Entity;
 import engine.game.HasPosition;
-import engine.timing.RepeatingTimer;
-import engine.timing.TickTimer;
 
 import java.util.List;
 
-public class PigeonSpawner implements Spawner {
-
-    private int x = 0;
-    private int y = 0;
-    private final RepeatingTimer timer;
+public class PigeonSpawner extends SetSpawner {
 
     public PigeonSpawner(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.timer = new RepeatingTimer(100);
+        super(x, y, 100);
     }
 
     public PigeonSpawner(int x, int y, int duration) {
-        this.x = x;
-        this.y = y;
-        this.timer = new RepeatingTimer(duration);
-    }
-
-    @Override
-    public TickTimer getTimer() {
-        return this.timer;
+        super(x, y, duration);
     }
 
     @Override
@@ -68,6 +53,11 @@ public class PigeonSpawner implements Spawner {
         }
     }
 
+    @Override
+    protected void spawn(GameState game) {
+
+    }
+
     /**
      * Return how far away this npc is from the given position
      *
@@ -78,25 +68,5 @@ public class PigeonSpawner implements Spawner {
         int deltaX = position.getX() - this.getX();
         int deltaY = position.getY() - this.getY();
         return (int) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-    }
-
-    @Override
-    public int getX() {
-        return this.x;
-    }
-
-    @Override
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    @Override
-    public int getY() {
-        return this.y;
-    }
-
-    @Override
-    public void setY(int y) {
-        this.y = y;
     }
 }
