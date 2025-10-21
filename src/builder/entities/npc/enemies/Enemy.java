@@ -22,7 +22,9 @@ public abstract class Enemy extends Npc {
         this.spawnX = x;
         this.spawnY = y;
         this.attacking = true;
-        this.spawner =
+        this.spawner = new SetSpawner(x, y) {
+            @Override protected void spawn(GameState game) {}
+        };
     }
 
     public int getSpawnX() {
