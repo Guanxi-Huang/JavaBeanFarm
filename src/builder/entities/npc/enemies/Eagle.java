@@ -33,7 +33,7 @@ public class Eagle extends Enemy {
 
     @Override
     public void tick(EngineState engine, GameState game) {
-        super.tick(engine);
+        super.tick(engine, game);
         getLifespan().tick();
         if (getLifespan().isFinished()) {
             this.markForRemoval();
@@ -50,17 +50,14 @@ public class Eagle extends Enemy {
             this.setSpeed(4); // the eagle BOOKS it once it has the food
             //      }
         }
-        if (isClosed(getTrackedTarget(),engine)
-                && !isAttacking()) {
+        if (isClosed(getTrackedTarget(),engine) && !isAttacking()) {
             this.markForRemoval();
         }
         this.move();
 
         updateAttacking();
 
-        if (this.isMarkedForRemoval()
-                && this.distanceFrom(getSpawnX(), getSpawnY())
-                        > engine.getDimensions().tileSize()) {
+        if (this.isMarkedForRemoval() && isClosed(getTrackedTarget(), engine)) {
             game.getInventory().addFood(this.food);
         }
     }

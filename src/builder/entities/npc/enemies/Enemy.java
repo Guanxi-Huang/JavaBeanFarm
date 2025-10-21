@@ -97,11 +97,23 @@ public abstract class Enemy extends Npc {
 
     public void attackState(EngineState engine, GameState game) {
 
+        //Magpie
+
+
+        //Eagle
+        if (isClosed(getTrackedTarget(),engine) && !isAttacking()) {
+            this.markForRemoval();
+        }
+        this.move();
+        updateAttacking();
+        if (this.isMarkedForRemoval() && isClosed(getTrackedTarget(), engine)) {
+            game.getInventory().addFood(this.food);
+        }
     }
 
     @Override
-    public void tick(EngineState state, GameState game) {
-        super.tick(state, game);
+    public void tick(EngineState engine, GameState game) {
+        super.tick(engine, game);
         if (lifespan != null) {
             lifespan.tick();
             if (lifespan.isFinished()) {
