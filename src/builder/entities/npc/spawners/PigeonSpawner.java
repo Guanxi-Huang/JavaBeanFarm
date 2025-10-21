@@ -24,8 +24,7 @@ public class PigeonSpawner extends SetSpawner {
     public void tick(EngineState state, GameState game) {
         getTimer().tick();
 
-        List<Tile> tiles =
-                game.getWorld().tileSelector(
+        List<Tile> tiles = game.getWorld().tileSelector(
                                 tile -> {
                                     for (Entity entity : tile.getStackedEntities()) {
                                         if (entity instanceof Cabbage) {

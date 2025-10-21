@@ -37,31 +37,7 @@ public class Pigeon extends Enemy{
     }
 
     @Override
-    public void tick(EngineState engine, GameState game) {
-        super.tick(engine, game);
-
-        this.getLifespan().tick();
-        if (this.getLifespan().isFinished()) {
-            this.markForRemoval();
-        }
-
-        if (!isAttacking() && isClosed(getTrackedTarget(), engine)) { // get close to spawn
-            this.markForRemoval();
-        }
-
-        if (isAttacking()) {
-            if (getTrackedTarget() == null) {
-                setTargetDirection((double) engine.getDimensions().windowSize() / 2,
-                        (double) engine.getDimensions().windowSize() / 2);
-                updateSprite(getTrackedTarget().getY());
-            } else {
-                setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
-            }
-        } else {
-            setTargetDirection(getSpawnX(), getSpawnY());
-            updateSprite(getSpawnY());
-        }
-        this.move();
+    public void updateAttack (EngineState engine, GameState game) {
 
         List<Tile> tiles = game.getWorld().tileSelector(tile -> {
                                     for (Entity entity : tile.getStackedEntities()) {

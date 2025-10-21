@@ -2,6 +2,7 @@ package builder.entities.npc.spawners;
 
 import builder.GameState;
 import engine.EngineState;
+import engine.game.HasPosition;
 import engine.timing.RepeatingTimer;
 import engine.timing.TickTimer;
 
@@ -9,9 +10,14 @@ import engine.timing.TickTimer;
  * The type Set spawner.
  */
 public abstract class SetSpawner implements Spawner {
-    private int x = 0;
-    private int y = 0;
+    private int x ;
+    private int y ;
     private TickTimer timer;
+
+    public SetSpawner(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
     public SetSpawner(int x, int y, int duration) {
         this.x = x;
@@ -55,5 +61,12 @@ public abstract class SetSpawner implements Spawner {
     }
 
     protected abstract void spawn(GameState game);
+
+    public HasPosition spawnPoint() {
+        return new SetSpawner(x, y) {
+            @Override
+            protected void spawn(GameState game){}
+        };
+    }
 }
 

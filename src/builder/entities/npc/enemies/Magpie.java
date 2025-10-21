@@ -26,25 +26,8 @@ public class Magpie extends Enemy {
     }
 
     @Override
-    public void tick(EngineState engine, GameState game) {
-        super.tick(engine, game);
+    public void updateAttack (EngineState engine, GameState game){
         this.directionalUpdateTimer.tick();
-        this.getLifespan().tick();
-        if (this.getLifespan().isFinished()) {
-            this.markForRemoval();
-        }
-        updateAttacking();
-        this.move();
-
-        if (!isAttacking()) {
-            if (this.isClosed(getTrackedTarget(), engine)) {
-                this.markForRemoval();
-            }
-        }
-
-        if (this.isMarkedForRemoval() && isAttacking()) {
-            game.getInventory().addCoins(this.coins);
-        }
 
         Player player = game.getPlayer();
         if (isClosed(player, engine) && game.getInventory().getCoins() > 0 && isAttacking()) {
@@ -53,6 +36,9 @@ public class Magpie extends Enemy {
             setAttacking(false);
             this.setSpeed(2); // book it
         }
+        if (this.isMarkedForRemoval() && isAttacking()) {
+            game.getInventory().addCoins(this.coins);
+        }
     }
 
 
@@ -60,6 +46,7 @@ public class Magpie extends Enemy {
     public SpriteGroup getSpriteGroup() {
         return art;
     }
+
 
     @Override
     public void interact(EngineState engine, GameState game) {}

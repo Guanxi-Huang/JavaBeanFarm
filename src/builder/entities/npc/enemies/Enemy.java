@@ -2,6 +2,7 @@ package builder.entities.npc.enemies;
 
 import builder.GameState;
 import builder.entities.npc.Npc;
+import builder.entities.npc.spawners.SetSpawner;
 import engine.EngineState;
 import engine.art.sprites.SpriteGroup;
 import engine.game.HasPosition;
@@ -14,13 +15,14 @@ public abstract class Enemy extends Npc {
     private FixedTimer lifespan;
     private boolean attacking;
     private HasPosition trackedTarget;
-    private SpriteGroup art;
+    private SetSpawner spawner;
 
     public Enemy(int x, int y) {
         super(x, y);
         this.spawnX = x;
         this.spawnY = y;
         this.attacking = true;
+        this.spawner =
     }
 
     public int getSpawnX() {
@@ -67,6 +69,14 @@ public abstract class Enemy extends Npc {
         this.trackedTarget = trackedTarget;
     }
 
+    public SetSpawner getSpawner() {
+        return spawner;
+    }
+
+    public void setSpawner(SetSpawner spawner) {
+        this.spawner = spawner;
+    }
+
     public void setTargetDirection(double x, double y) {
         double deltaX = x - this.getX();
         double deltaY = y - this.getY();
@@ -81,45 +91,35 @@ public abstract class Enemy extends Npc {
         }
     }
 
-    public void updateAttacking() {
-        if (isAttacking()) {
-            setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
-            updateSprite(getTrackedTarget().getY());
-        } else {
-            setTargetDirection(getSpawnX(), getSpawnY());
-            updateSprite(getSpawnY());
-        }
-    }
 
     public boolean isClosed(HasPosition target, EngineState engine) {
         return distanceFrom(target) < engine.getDimensions().tileSize();
     }
 
-    public void attackState(EngineState engine, GameState game) {
+    public abstract void updateAttack (EngineState engine, GameState game);
 
-        //Magpie
-
-
-        //Eagle
-        if (isClosed(getTrackedTarget(),engine) && !isAttacking()) {
-            this.markForRemoval();
-        }
-        this.move();
-        updateAttacking();
-        if (this.isMarkedForRemoval() && isClosed(getTrackedTarget(), engine)) {
-            game.getInventory().addFood(this.food);
-        }
-    }
 
     @Override
     public void tick(EngineState engine, GameState game) {
         super.tick(engine, game);
-        if (lifespan != null) {
-            lifespan.tick();
-            if (lifespan.isFinished()) {
+        if (this.getLifespan() != null) {
+            this.getLifespan().tick();
+            if (this.getLifespan().isFinished()) {
                 markForRemoval();
             }
         }
+        if (isAttacking()) {
+            setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
+            updateSprite(getTrackedTarget().getY());
+            updateAttack(engine, game);
+        } else {
+            setTargetDirection(getSpawnX(), getSpawnY());
+            updateSprite(getSpawnY());
+            if (isClosed(spawner.spawnPoint(), engine)) {
+                markForRemoval();
+            }
+        }
+        this.move();
     }
 
     @Override
