@@ -91,6 +91,14 @@ public abstract class Enemy extends Npc {
         }
     }
 
+    public boolean isClosed(HasPosition target, EngineState engine) {
+        return distanceFrom(target) < engine.getDimensions().tileSize();
+    }
+
+    public void attackState(EngineState engine, GameState game) {
+
+    }
+
     @Override
     public void tick(EngineState state, GameState game) {
         super.tick(state, game);

@@ -45,8 +45,7 @@ public class Pigeon extends Enemy{
             this.markForRemoval();
         }
 
-        if (!isAttacking() &&
-            this.distanceFrom(getSpawnX(), getSpawnY()) < engine.getDimensions().tileSize()) { // get close to spawn
+        if (!isAttacking() && isClosed(getTrackedTarget(), engine)) { // get close to spawn
             this.markForRemoval();
         }
 
@@ -84,7 +83,7 @@ public class Pigeon extends Enemy{
             }
             setTrackedTarget(closest);
 
-            if (isAttacking() && this.distanceFrom(getTrackedTarget()) < engine.getDimensions().tileSize()) {
+            if (isAttacking() && isClosed(getTrackedTarget(), engine)) {
                 for (Entity entity : closest.getStackedEntities()) {
                     if (entity instanceof Cabbage cabbage) {
                         cabbage.markForRemoval();

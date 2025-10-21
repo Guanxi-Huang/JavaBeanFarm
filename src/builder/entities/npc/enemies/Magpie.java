@@ -37,10 +37,7 @@ public class Magpie extends Enemy {
         this.directionalUpdateTimer.tick();
 
         Player player = game.getPlayer();
-
-        final boolean hasHitPlayer =
-                this.distanceFrom(player.getX(), player.getY()) < engine.getDimensions().tileSize();
-        if (hasHitPlayer && game.getInventory().getCoins() > 0 && isAttacking()) {
+        if (isClosed(player, engine) && game.getInventory().getCoins() > 0 && isAttacking()) {
             game.getInventory().addCoins(-1);
             this.coins += 1;
             setAttacking(false);
@@ -48,7 +45,7 @@ public class Magpie extends Enemy {
         }
 
         if (!isAttacking()) {
-            if (this.distanceFrom(getSpawnX(), getSpawnX()) < engine.getDimensions().tileSize()) {
+            if (this.isClosed(getTrackedTarget(), engine)) {
                 this.markForRemoval();
             }
         }
@@ -57,6 +54,7 @@ public class Magpie extends Enemy {
             game.getInventory().addCoins(this.coins);
         }
     }
+
 
     @Override
     public SpriteGroup getSpriteGroup() {

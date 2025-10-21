@@ -1,6 +1,7 @@
 package builder.entities.npc.enemies;
 
 import builder.GameState;
+import builder.player.Player;
 import builder.ui.SpriteGallery;
 
 import engine.EngineState;
@@ -37,9 +38,9 @@ public class Eagle extends Enemy {
         if (getLifespan().isFinished()) {
             this.markForRemoval();
         }
-        if ((this.distanceFrom(game.getPlayer().getX(), game.getPlayer().getY())
-                        < engine.getDimensions().tileSize())
-                && isAttacking()) {
+
+        Player player = game.getPlayer();
+        if (isClosed(player, engine) && isAttacking()) {
             setAttacking(false);
             //      if (game.getInventory().getFood() > 0) {
             if (this.food == 0) {
@@ -49,7 +50,7 @@ public class Eagle extends Enemy {
             this.setSpeed(4); // the eagle BOOKS it once it has the food
             //      }
         }
-        if ((this.distanceFrom(getSpawnX(), getSpawnY()) < engine.getDimensions().tileSize())
+        if (isClosed(getTrackedTarget(),engine)
                 && !isAttacking()) {
             this.markForRemoval();
         }
