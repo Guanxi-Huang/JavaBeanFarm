@@ -1,7 +1,6 @@
 package builder.entities.npc.enemies;
 
 import builder.GameState;
-import builder.entities.npc.Expirable;
 import builder.ui.SpriteGallery;
 
 import engine.EngineState;
@@ -9,7 +8,7 @@ import engine.art.sprites.SpriteGroup;
 import engine.game.HasPosition;
 import engine.timing.FixedTimer;
 
-public class Eagle extends Enemy implements Expirable {
+public class Eagle extends Enemy {
 
     private static final SpriteGroup art = SpriteGallery.eagle;
     private int food = 0;
@@ -22,9 +21,13 @@ public class Eagle extends Enemy implements Expirable {
         this.setDirection(direction);
         this.setSpeed(2);
         setTrackedTarget(trackedTarget);
-        setSprite(art.getSprite("default"));
         setLifespan(new FixedTimer(5000));
         setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
+    }
+
+    @Override
+    public SpriteGroup getSpriteGroup() {
+        return art;
     }
 
     @Override
@@ -54,18 +57,10 @@ public class Eagle extends Enemy implements Expirable {
 
         if (isAttacking()) {
             setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
-            if (getTrackedTarget().getY() > this.getY()) {
-                this.setSprite(art.getSprite("down"));
-            } else {
-                this.setSprite(art.getSprite("up"));
-            }
+            updateSprite(getTrackedTarget().getY());
         } else {
             setTargetDirection(getSpawnX(), getSpawnY());
-            if (getSpawnY() < this.getY()) {
-                this.setSprite(art.getSprite("up"));
-            } else {
-                this.setSprite(art.getSprite("down"));
-            }
+            updateSprite(getSpawnY());
         }
 
         if (this.isMarkedForRemoval()

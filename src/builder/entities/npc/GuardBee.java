@@ -13,7 +13,7 @@ import engine.timing.FixedTimer;
  * A highly trained Guard Bee... don't think about that too much. This is our projectile class,
  * basically a bullet.
  */
-public class GuardBee extends Npc implements Expirable {
+public class GuardBee extends Npc {
 
     private final int spawnX;
     private final int spawnY;
@@ -39,16 +39,6 @@ public class GuardBee extends Npc implements Expirable {
         double deltaY = trackedTarget.getY() - this.getY();
         this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
         this.setSpeed(GuardBee.SPEED);
-    }
-
-    @Override
-    public FixedTimer getLifespan() {
-        return lifespan;
-    }
-
-    @Override
-    public void setLifespan(FixedTimer timer) {
-        this.lifespan = timer;
     }
 
     public void updateArtBasedOnDirection() {

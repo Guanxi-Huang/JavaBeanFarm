@@ -1,7 +1,6 @@
 package builder.entities.npc.enemies;
 
 import builder.GameState;
-import builder.entities.npc.Expirable;
 import builder.player.Player;
 import builder.ui.SpriteGallery;
 
@@ -11,12 +10,12 @@ import engine.game.HasPosition;
 import engine.timing.FixedTimer;
 import engine.timing.RepeatingTimer;
 
-public class Magpie extends Enemy implements Expirable {
+public class Magpie extends Enemy {
 
     private static final SpriteGroup art = SpriteGallery.magpie;
     public int coins = 0;
 
-    private RepeatingTimer directionalUpdateTimer = new RepeatingTimer(30);
+    private final RepeatingTimer directionalUpdateTimer = new RepeatingTimer(30);
 
     public Magpie(int x, int y, HasPosition trackedTarget) {
         super(x, y);
@@ -35,18 +34,10 @@ public class Magpie extends Enemy implements Expirable {
         }
         if (isAttacking()) {
             setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
-            if (getTrackedTarget().getY() > this.getY()) {
-                this.setSprite(art.getSprite("down"));
-            } else {
-                this.setSprite(art.getSprite("up"));
-            }
+            updateSprite(getTrackedTarget().getY());
         } else {
             setTargetDirection(getSpawnX(), getSpawnY());
-            if (getSpawnX() < this.getY()) {
-                this.setSprite(art.getSprite("up"));
-            } else {
-                this.setSprite(art.getSprite("down"));
-            }
+            updateSprite(getSpawnY());
         }
         this.move();
         this.directionalUpdateTimer.tick();
@@ -71,6 +62,11 @@ public class Magpie extends Enemy implements Expirable {
         if (this.isMarkedForRemoval() && isAttacking()) {
             game.getInventory().addCoins(this.coins);
         }
+    }
+
+    @Override
+    public SpriteGroup getSpriteGroup() {
+        return art;
     }
 
     @Override

@@ -2,8 +2,8 @@ package builder.entities.npc.enemies;
 
 import builder.GameState;
 import builder.entities.npc.Npc;
-
 import engine.EngineState;
+import engine.art.sprites.SpriteGroup;
 import engine.game.HasPosition;
 import engine.timing.FixedTimer;
 
@@ -14,6 +14,7 @@ public abstract class Enemy extends Npc {
     private FixedTimer lifespan;
     private boolean attacking;
     private HasPosition trackedTarget;
+    private SpriteGroup art;
 
     public Enemy(int x, int y) {
         super(x, y);
@@ -34,6 +35,10 @@ public abstract class Enemy extends Npc {
         return spawnY;
     }
 
+    public void setSpawnY(int spawnY) {
+        this.spawnY = spawnY;
+    }
+
     public FixedTimer getLifespan() {
         return lifespan;
     }
@@ -51,6 +56,9 @@ public abstract class Enemy extends Npc {
         this.attacking = attacking;
     }
 
+    public abstract SpriteGroup getSpriteGroup();
+
+
     public HasPosition getTrackedTarget() {
         return trackedTarget;
     }
@@ -65,10 +73,24 @@ public abstract class Enemy extends Npc {
         this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
     }
 
+    public void updateSprite(int trackedTargetY) {
+        if (trackedTargetY > this.getY()) {
+            this.setSprite(getSpriteGroup().getSprite("down"));
+        } else {
+            this.setSprite(getSpriteGroup().getSprite("up"));
+        }
+    }
+
 
     @Override
     public void tick(EngineState state, GameState game) {
         super.tick(state, game);
+        if (lifespan != null) {
+            lifespan.tick();
+            if (lifespan.isFinished()) {
+                markForRemoval();
+            }
+        }
     }
 
     @Override

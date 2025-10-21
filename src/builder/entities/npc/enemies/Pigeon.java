@@ -1,7 +1,6 @@
 package builder.entities.npc.enemies;
 
 import builder.GameState;
-import builder.entities.npc.Expirable;
 import builder.entities.resources.Cabbage;
 import builder.entities.tiles.Tile;
 import builder.ui.SpriteGallery;
@@ -14,7 +13,7 @@ import engine.timing.FixedTimer;
 
 import java.util.List;
 
-public class Pigeon extends Enemy implements Expirable {
+public class Pigeon extends Enemy{
 
     private static final SpriteGroup art = SpriteGallery.pigeon;
 
@@ -33,6 +32,11 @@ public class Pigeon extends Enemy implements Expirable {
     }
 
     @Override
+    public SpriteGroup getSpriteGroup() {
+        return art;
+    }
+
+    @Override
     public void tick(EngineState engine, GameState game) {
         super.tick(engine, game);
         if (!isAttacking()) {
@@ -41,11 +45,7 @@ public class Pigeon extends Enemy implements Expirable {
                     < engine.getDimensions().tileSize()) { // get close to spawn
                 this.markForRemoval();
             }
-            if (getSpawnY() < this.getY()) {
-                this.setSprite(art.getSprite("up"));
-            } else {
-                this.setSprite(art.getSprite("down"));
-            }
+            updateSprite(getTrackedTarget().getY());
         }
         this.move();
         if (getTrackedTarget() == null
@@ -53,11 +53,7 @@ public class Pigeon extends Enemy implements Expirable {
             // the screen if its hunting
             setTargetDirection((double) engine.getDimensions().windowSize() / 2,
                     (double) engine.getDimensions().windowSize() / 2);
-            if (getTrackedTarget().getY() > this.getY()) {
-                this.setSprite(art.getSprite("down"));
-            } else {
-                this.setSprite(art.getSprite("up"));
-            }
+            updateSprite(getTrackedTarget().getY());
         }
 
         if (getTrackedTarget() != null && isAttacking()) {
@@ -73,11 +69,7 @@ public class Pigeon extends Enemy implements Expirable {
             if (this.distanceFrom(getSpawnX(), getSpawnY()) < engine.getDimensions().tileSize()) {
                 this.markForRemoval();
             }
-            if (getSpawnY() < this.getY()) {
-                this.setSprite(art.getSprite("up"));
-            } else {
-                this.setSprite(art.getSprite("down"));
-            }
+            updateSprite(getSpawnY());
         }
 
         List<Tile> tiles =
