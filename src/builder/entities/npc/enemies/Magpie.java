@@ -32,13 +32,7 @@ public class Magpie extends Enemy {
         if (this.getLifespan().isFinished()) {
             this.markForRemoval();
         }
-        if (isAttacking()) {
-            setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
-            updateSprite(getTrackedTarget().getY());
-        } else {
-            setTargetDirection(getSpawnX(), getSpawnY());
-            updateSprite(getSpawnY());
-        }
+        updateAttacking();
         this.move();
         this.directionalUpdateTimer.tick();
 

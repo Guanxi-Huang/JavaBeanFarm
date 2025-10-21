@@ -55,13 +55,7 @@ public class Eagle extends Enemy {
         }
         this.move();
 
-        if (isAttacking()) {
-            setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
-            updateSprite(getTrackedTarget().getY());
-        } else {
-            setTargetDirection(getSpawnX(), getSpawnY());
-            updateSprite(getSpawnY());
-        }
+        updateAttacking();
 
         if (this.isMarkedForRemoval()
                 && this.distanceFrom(getSpawnX(), getSpawnY())

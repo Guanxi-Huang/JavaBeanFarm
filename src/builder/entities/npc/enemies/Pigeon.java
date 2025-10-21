@@ -39,43 +39,32 @@ public class Pigeon extends Enemy{
     @Override
     public void tick(EngineState engine, GameState game) {
         super.tick(engine, game);
-        if (!isAttacking()) {
-            setTargetDirection(getSpawnX(), getSpawnY());
-            if (this.distanceFrom(getSpawnX(), getSpawnY())
-                    < engine.getDimensions().tileSize()) { // get close to spawn
-                this.markForRemoval();
-            }
-            updateSprite(getTrackedTarget().getY());
-        }
-        this.move();
-        if (getTrackedTarget() == null
-                && isAttacking()) { // if the pigeon has no target, it should go to the center of
-            // the screen if its hunting
-            setTargetDirection((double) engine.getDimensions().windowSize() / 2,
-                    (double) engine.getDimensions().windowSize() / 2);
-            updateSprite(getTrackedTarget().getY());
-        }
-
-        if (getTrackedTarget() != null && isAttacking()) {
-            setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
-        }
 
         this.getLifespan().tick();
         if (this.getLifespan().isFinished()) {
             this.markForRemoval();
         }
 
-        if (!isAttacking()) {
-            if (this.distanceFrom(getSpawnX(), getSpawnY()) < engine.getDimensions().tileSize()) {
-                this.markForRemoval();
-            }
-            updateSprite(getSpawnY());
+        if (!isAttacking() &&
+            this.distanceFrom(getSpawnX(), getSpawnY()) < engine.getDimensions().tileSize()) { // get close to spawn
+            this.markForRemoval();
         }
 
-        List<Tile> tiles =
-                game.getWorld()
-                        .tileSelector(
-                                tile -> {
+        if (isAttacking()) {
+            if (getTrackedTarget() == null) {
+                setTargetDirection((double) engine.getDimensions().windowSize() / 2,
+                        (double) engine.getDimensions().windowSize() / 2);
+                updateSprite(getTrackedTarget().getY());
+            } else {
+                setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
+            }
+        } else {
+            setTargetDirection(getSpawnX(), getSpawnY());
+            updateSprite(getSpawnY());
+        }
+        this.move();
+
+        List<Tile> tiles = game.getWorld().tileSelector(tile -> {
                                     for (Entity entity : tile.getStackedEntities()) {
                                         if (entity instanceof Cabbage) {
                                             return true;
@@ -95,8 +84,7 @@ public class Pigeon extends Enemy{
             }
             setTrackedTarget(closest);
 
-            if (isAttacking()
-                    && this.distanceFrom(getTrackedTarget()) < engine.getDimensions().tileSize()) {
+            if (isAttacking() && this.distanceFrom(getTrackedTarget()) < engine.getDimensions().tileSize()) {
                 for (Entity entity : closest.getStackedEntities()) {
                     if (entity instanceof Cabbage cabbage) {
                         cabbage.markForRemoval();

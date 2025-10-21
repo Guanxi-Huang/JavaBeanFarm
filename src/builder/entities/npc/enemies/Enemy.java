@@ -81,6 +81,15 @@ public abstract class Enemy extends Npc {
         }
     }
 
+    public void updateAttacking() {
+        if (isAttacking()) {
+            setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
+            updateSprite(getTrackedTarget().getY());
+        } else {
+            setTargetDirection(getSpawnX(), getSpawnY());
+            updateSprite(getSpawnY());
+        }
+    }
 
     @Override
     public void tick(EngineState state, GameState game) {
