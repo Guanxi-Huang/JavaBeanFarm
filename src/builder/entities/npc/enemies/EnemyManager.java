@@ -63,15 +63,7 @@ public class EnemyManager implements Tickable, Interactable, RenderableGroup {
             spawner.tick(state, game);
         }
         for (Enemy bird : Birds) {
-            if (bird instanceof Magpie temp) {
-                temp.tick(state, game);
-            }
-            if (bird instanceof Eagle temp) {
-                temp.tick(state, game);
-            }
-            if (bird instanceof Pigeon temp) {
-                temp.tick(state, game);
-            }
+            bird.tick(state,game);
         }
     }
 
