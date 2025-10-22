@@ -11,6 +11,9 @@ import engine.renderer.Renderable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages a collection of NPCs.
+ */
 public class NpcManager implements Interactable, Tickable, RenderableGroup {
     public final ArrayList<Npc> npcs = new ArrayList<>();
 
@@ -25,6 +28,8 @@ public class NpcManager implements Interactable, Tickable, RenderableGroup {
     }
 
     /**
+     * Add an NPC to this manager for tracking and management.
+     *
      * @param npc npc to add to the manager for it to well manage/track.
      */
     public void addNpc(Npc npc) {

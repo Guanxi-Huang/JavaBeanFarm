@@ -10,8 +10,8 @@ import engine.timing.TickTimer;
  * The type Set spawner.
  */
 public abstract class SetSpawner implements Spawner {
-    private int x ;
-    private int y ;
+    private int x;
+    private int y;
     private TickTimer timer;
 
     public SetSpawner(int x, int y) {

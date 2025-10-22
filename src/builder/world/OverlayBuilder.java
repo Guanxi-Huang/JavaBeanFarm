@@ -15,7 +15,6 @@ public class OverlayBuilder {
     /**
      * @param filepath - location of the text file we wish to load
      * @return String representation of the contents of file found at the filepath.
-     * @throws IOException
      */
     private static String load(String filepath) throws IOException {
         if (!filepath.endsWith(".details")) {
@@ -66,10 +65,14 @@ public class OverlayBuilder {
         final int duration = Integer.parseInt(durationChunk[1]);
         return new SpawnerDetails() {
             @Override
-            public int getX() {return x;}
+            public int getX() {
+                return x;
+            }
 
             @Override
-            public int getY() {return y;}
+            public int getY() {
+                return y;
+            }
 
             @Override
             public void setX(int x) {}

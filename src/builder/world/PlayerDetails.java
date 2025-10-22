@@ -6,4 +6,5 @@ public interface PlayerDetails extends ImmutablePosition {
     int getStartingFood();
 
     int getStartingCoins();
+    
 }

@@ -61,10 +61,10 @@ public class JavaBeanFarm implements Game {
 
     private final BeanWorld world;
 
-    private final Inventory inventory;
+    private Inventory inventory;
     private final List<Overlay> overlays = new ArrayList<>();
 
-    private String readAllReader(Reader reader) throws IOException {
+    private static String readAllReader(Reader reader) throws IOException {
         BufferedReader br = new BufferedReader(reader);
         StringJoiner sb = new StringJoiner(System.lineSeparator());
         String line;
@@ -92,24 +92,24 @@ public class JavaBeanFarm implements Game {
         this.npcs = new NpcManager();
         this.enemies = new EnemyManager(dimensions);
 
+        String worldContent = readAllReader(mapReader);
+        this.world = WorldBuilder.fromTiles(WorldBuilder.fromString(dimensions, worldContent));
+
         final List<SpawnerDetails> magpieSpawnPoints =
-                OverlayBuilder.getEnemySpawnDetailsFromString("magpiespawner",detailsContent);
+                OverlayBuilder.getEnemySpawnDetailsFromString("magpiespawner", detailsContent);
         for (SpawnerDetails details : magpieSpawnPoints) {
             this.enemies.add(new MagpieSpawner(details.getX(), details.getY(), details.getDuration()));
         }
         final List<SpawnerDetails> eagleSpawnPoints =
-                OverlayBuilder.getEnemySpawnDetailsFromString("eaglespawner",detailsContent);
+                OverlayBuilder.getEnemySpawnDetailsFromString("eaglespawner", detailsContent);
         for (SpawnerDetails details : eagleSpawnPoints) {
             this.enemies.add(new EagleSpawner(details.getX(), details.getY(), details.getDuration()));
         }
         final List<SpawnerDetails> pigeonSpawnPoints =
-                OverlayBuilder.getEnemySpawnDetailsFromString("pigeonspawner",detailsContent);
+                OverlayBuilder.getEnemySpawnDetailsFromString("pigeonspawner", detailsContent);
         for (SpawnerDetails details : pigeonSpawnPoints) {
             this.enemies.add(new PigeonSpawner(details.getX(), details.getY(), details.getDuration()));
         }
-
-        String worldContent = readAllReader(mapReader);
-        this.world = WorldBuilder.fromTiles(WorldBuilder.fromString(dimensions, worldContent));
 
         final List<CabbageDetails> cabbageSpawnPoints =
                 OverlayBuilder.getCabbageSpawnDetailsFromString(detailsContent);
@@ -144,7 +144,8 @@ public class JavaBeanFarm implements Game {
         this.overlays.add(new ResourceOverlay(dimensions));
     }
 
-    public JavaBeanFarm(Dimensions dimensions, String mapFile, String detailsFile) throws IOException, WorldLoadException {
+    public JavaBeanFarm(Dimensions dimensions, String mapFile, String detailsFile)
+            throws IOException, WorldLoadException {
         this(dimensions, new FileReader(mapFile), new FileReader(detailsFile));
     }
 
