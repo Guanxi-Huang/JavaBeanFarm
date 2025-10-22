@@ -66,14 +66,10 @@ public class OverlayBuilder {
         final int duration = Integer.parseInt(durationChunk[1]);
         return new SpawnerDetails() {
             @Override
-            public int getX() {
-                return x;
-            }
+            public int getX() {return x;}
 
             @Override
-            public int getY() {
-                return y;
-            }
+            public int getY() {return y;}
 
             @Override
             public void setX(int x) {}
@@ -101,29 +97,9 @@ public class OverlayBuilder {
         };
     }
 
-    public static List<SpawnerDetails> getEagleSpawnDetailsFromString(String detailsContent)
+    public static List<SpawnerDetails> getEnemySpawnDetailsFromString(String label, String detailsContent)
             throws IOException {
-        List<String> section = OverlayBuilder.getSection("eaglespawner", detailsContent);
-        final List<SpawnerDetails> list = new ArrayList<>();
-        for (String entry : section) {
-            list.add(extractSpawnDetailsFromLine(entry));
-        }
-        return list;
-    }
-
-    public static List<SpawnerDetails> getPigeonSpawnDetailsFromString(String detailsContent)
-            throws IOException {
-        List<String> section = OverlayBuilder.getSection("pigeonspawner", detailsContent);
-        final List<SpawnerDetails> list = new ArrayList<>();
-        for (String entry : section) {
-            list.add(extractSpawnDetailsFromLine(entry));
-        }
-        return list;
-    }
-
-    public static List<SpawnerDetails> getMagpieSpawnDetailsFromString(String detailsContent)
-            throws IOException {
-        List<String> section = OverlayBuilder.getSection("magpiespawner", detailsContent);
+        List<String> section = OverlayBuilder.getSection(label, detailsContent);
         final List<SpawnerDetails> list = new ArrayList<>();
         for (String entry : section) {
             list.add(extractSpawnDetailsFromLine(entry));
