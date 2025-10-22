@@ -66,7 +66,7 @@ public class JavaBeanFarm implements Game {
 
     private String readAllReader(Reader reader) throws IOException {
         BufferedReader br = new BufferedReader(reader);
-         StringJoiner sb = new StringJoiner(System.lineSeparator());
+        StringJoiner sb = new StringJoiner(System.lineSeparator());
         String line;
         while ((line = br.readLine()) != null) {
             sb.add(line);
@@ -91,32 +91,21 @@ public class JavaBeanFarm implements Game {
         this.playerManager = new PlayerManager(playerDetails.getX(), playerDetails.getY());
         this.npcs = new NpcManager();
         this.enemies = new EnemyManager(dimensions);
+
         final List<SpawnerDetails> magpieSpawnPoints =
                 OverlayBuilder.getMagpieSpawnDetailsFromString(detailsContent);
-        for (SpawnerDetails spawnerDetails : magpieSpawnPoints) {
-            this.enemies.add(
-                    new MagpieSpawner(
-                            spawnerDetails.getX(),
-                            spawnerDetails.getY(),
-                            spawnerDetails.getDuration()));
+        for (SpawnerDetails details : magpieSpawnPoints) {
+            this.enemies.add(new MagpieSpawner(details.getX(), details.getY()));
         }
         final List<SpawnerDetails> eagleSpawnPoints =
                 OverlayBuilder.getEagleSpawnDetailsFromString(detailsContent);
-        for (SpawnerDetails spawnerDetails : eagleSpawnPoints) {
-            this.enemies.add(
-                    new EagleSpawner(
-                            spawnerDetails.getX(),
-                            spawnerDetails.getY(),
-                            spawnerDetails.getDuration()));
+        for (SpawnerDetails details : eagleSpawnPoints) {
+            this.enemies.add(new EagleSpawner(details.getX(), details.getY()));
         }
         final List<SpawnerDetails> pigeonSpawnPoints =
                 OverlayBuilder.getPigeonSpawnDetailsFromString(detailsContent);
-        for (SpawnerDetails spawnerDetails : pigeonSpawnPoints) {
-            this.enemies.add(
-                    new PigeonSpawner(
-                            spawnerDetails.getX(),
-                            spawnerDetails.getY(),
-                            spawnerDetails.getDuration()));
+        for (SpawnerDetails details : pigeonSpawnPoints) {
+            this.enemies.add(new PigeonSpawner(details.getX(), details.getY()));
         }
 
         String worldContent = readAllReader(mapReader);
@@ -158,6 +147,8 @@ public class JavaBeanFarm implements Game {
     public JavaBeanFarm(Dimensions dimensions, String mapFile, String detailsFile) throws IOException, WorldLoadException {
         this(dimensions, new FileReader(mapFile), new FileReader(detailsFile));
     }
+
+    public void addSpawner () {}
 
     /**
      * Ticks the internal game state forward by one frame. a
