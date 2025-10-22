@@ -93,19 +93,19 @@ public class JavaBeanFarm implements Game {
         this.enemies = new EnemyManager(dimensions);
 
         final List<SpawnerDetails> magpieSpawnPoints =
-                OverlayBuilder.getMagpieSpawnDetailsFromString(detailsContent);
+                OverlayBuilder.getEnemySpawnDetailsFromString("magpiespawner",detailsContent);
         for (SpawnerDetails details : magpieSpawnPoints) {
-            this.enemies.add(new MagpieSpawner(details.getX(), details.getY()));
+            this.enemies.add(new MagpieSpawner(details.getX(), details.getY(), details.getDuration()));
         }
         final List<SpawnerDetails> eagleSpawnPoints =
-                OverlayBuilder.getEagleSpawnDetailsFromString(detailsContent);
+                OverlayBuilder.getEnemySpawnDetailsFromString("eaglespawner",detailsContent);
         for (SpawnerDetails details : eagleSpawnPoints) {
-            this.enemies.add(new EagleSpawner(details.getX(), details.getY()));
+            this.enemies.add(new EagleSpawner(details.getX(), details.getY(), details.getDuration()));
         }
         final List<SpawnerDetails> pigeonSpawnPoints =
-                OverlayBuilder.getPigeonSpawnDetailsFromString(detailsContent);
+                OverlayBuilder.getEnemySpawnDetailsFromString("pigeonspawner",detailsContent);
         for (SpawnerDetails details : pigeonSpawnPoints) {
-            this.enemies.add(new PigeonSpawner(details.getX(), details.getY()));
+            this.enemies.add(new PigeonSpawner(details.getX(), details.getY(), details.getDuration()));
         }
 
         String worldContent = readAllReader(mapReader);
