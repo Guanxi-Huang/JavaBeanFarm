@@ -22,6 +22,13 @@ public class BeeHive extends Npc {
 
     private final RepeatingTimer timer = new RepeatingTimer(TIMER);
 
+    /**
+     * Instantiates a new Bee hive.
+     *
+     * @require x >= 0 && y >= 0;
+     * @param x the x
+     * @param y the y
+     */
     public BeeHive(int x, int y) {
         super(x, y);
         this.setSprite(art.getSprite("default"));
@@ -48,6 +55,12 @@ public class BeeHive extends Npc {
         }
     }
 
+    /**
+     * Check and spawn bee npc.
+     *
+     * @param targets the targets
+     * @return the npc
+     */
     public Npc checkAndSpawnBee(ArrayList<Enemy> targets) {
         for (Enemy enemy : targets) {
             if (this.distanceFrom(enemy) < DETECTION_DISTANCE && this.loaded) {
