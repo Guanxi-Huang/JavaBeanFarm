@@ -17,8 +17,14 @@ import java.util.List;
 public class NpcManager implements Interactable, Tickable, RenderableGroup {
     public final ArrayList<Npc> npcs = new ArrayList<>();
 
+    /**
+     * Instantiates a new Npc manager.
+     */
     public NpcManager() {}
 
+    /**
+     * Cleanup.
+     */
     public void cleanup() {
         for (int i = this.npcs.size() - 1; i >= 0; i -= 1) {
             if (this.npcs.get(i).isMarkedForRemoval()) {
@@ -59,7 +65,7 @@ public class NpcManager implements Interactable, Tickable, RenderableGroup {
     private ArrayList<Interactable> getInteractables() {
         final ArrayList<Interactable> interactables = new ArrayList<>();
         for (Npc npc : npcs) {
-            if (npc instanceof Interactable) {
+            if (npc != null) {
                 interactables.add(npc);
             }
         }
