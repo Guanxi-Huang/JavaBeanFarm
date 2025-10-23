@@ -19,6 +19,7 @@ public class Npc extends Entity implements Interactable, Tickable, Directable {
     /**
      * Instantiates a new Npc.
      *
+     * @require x >= 0 && y >= 0;
      * @param x the x
      * @param y the y
      */
@@ -44,15 +45,28 @@ public class Npc extends Entity implements Interactable, Tickable, Directable {
         this.speed = speed;
     }
 
+    /**
+     * Gets direction.
+     *
+     * @return the direction.
+     */
     public int getDirection() {
         return this.direction;
     }
 
+    /**
+     * Sets direction.
+     *
+     * @require direction must be greater or equal to 0.
+     * @param direction the speed
+     */
     public void setDirection(int direction) {
         this.direction = direction;
     }
 
-    /** Adjust the X and Y of {@link Npc} */
+    /**
+     * Adjust the X and Y of {@link Npc}
+     */
     public void move() {
         final int deltaX = (int) Math.round(Math.cos(Math.toRadians(this.direction)) * this.speed);
         final int deltaY = (int) Math.round(Math.sin(Math.toRadians(this.direction)) * this.speed);

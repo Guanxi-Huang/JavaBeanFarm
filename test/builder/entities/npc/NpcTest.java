@@ -37,8 +37,8 @@ public class NpcTest {
         npc.setDirection(0);
         npc.move();
         // Direction 0 means moving right
-        assertEquals(11, npc.getX()); // 10 + cos(0)*1 = 11
-        assertEquals(20, npc.getY()); // 20 + sin(0)*1 = 20
+        assertEquals(11, npc.getX());
+        assertEquals(20, npc.getY());
     }
 
     @Test
@@ -46,8 +46,8 @@ public class NpcTest {
         npc.setDirection(90);
         npc.move();
         // Direction 90 means moving down
-        assertEquals(10, npc.getX()); // 10 + cos(90)*1 ≈ 10
-        assertEquals(21, npc.getY()); // 20 + sin(90)*1 = 21
+        assertEquals(10, npc.getX());
+        assertEquals(21, npc.getY());
     }
 
     @Test
@@ -111,26 +111,10 @@ public class NpcTest {
     }
 
     @Test
-    public void testNegativeCoordinates() {
-        Npc npcNegative = new Npc(-10, -20);
-        assertEquals(-10, npcNegative.getX());
-        assertEquals(-20, npcNegative.getY());
-    }
-
-    @Test
     public void testZeroCoordinates() {
         Npc npcZero = new Npc(0, 0);
         assertEquals(0, npcZero.getX());
         assertEquals(0, npcZero.getY());
-    }
-
-    @Test
-    public void testDirectionNegative() {
-        npc.setDirection(-45);
-        npc.move();
-        // Direction -45 is equivalent to 315 (moving down-right)
-        assertTrue(npc.getX() > 10);
-        assertTrue(npc.getY() > 20);
     }
 
     @Test
@@ -179,7 +163,7 @@ public class NpcTest {
     }
 
     @Test
-    public void testDistanceCalculation5_12_13() {
+    public void testDistanceCalculation() {
         // Test with 5-12-13 triangle
         npc.setX(0);
         npc.setY(0);
