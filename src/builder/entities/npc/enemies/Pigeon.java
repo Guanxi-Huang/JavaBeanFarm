@@ -13,7 +13,7 @@ import engine.timing.FixedTimer;
 
 import java.util.List;
 
-public class Pigeon extends Enemy{
+public class Pigeon extends Enemy {
 
     private static final SpriteGroup art = SpriteGallery.pigeon;
 
@@ -37,7 +37,7 @@ public class Pigeon extends Enemy{
     }
 
     @Override
-    public void updateAttack (EngineState engine, GameState game) {
+    public void updateAttack(EngineState engine, GameState game) {
 
         List<Tile> tiles = game.getWorld().tileSelector(tile -> {
                                     for (Entity entity : tile.getStackedEntities()) {

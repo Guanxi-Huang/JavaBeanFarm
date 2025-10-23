@@ -16,11 +16,11 @@ public class Eagle extends Enemy {
 
     private static final SpriteGroup art = SpriteGallery.eagle;
     private int food = 0;
-    private int direction = 20;
 
     /**
      * Instantiates a new Eagle.
      *
+     * @require the tracked target must exist
      * @param x             the x
      * @param y             the y
      * @param trackedTarget the tracked target
@@ -29,11 +29,10 @@ public class Eagle extends Enemy {
         super(x, y);
 
         // derive direction based on where the eagle is and the initial target is
-        this.setDirection(direction);
         this.setSpeed(2);
         setTrackedTarget(trackedTarget);
         setLifespan(new FixedTimer(5000));
-        setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
+        setTargetDirection(trackedTarget.getX(), trackedTarget.getY());
     }
 
     @Override
@@ -44,18 +43,19 @@ public class Eagle extends Enemy {
     @Override
     public void updateAttack(EngineState engine, GameState game) {
         Player player = game.getPlayer();
-        if (isClosed(player, engine) && isAttacking()) {
+        if (player != null && isClosed(player, engine) && isAttacking()) {
             setAttacking(false);
-            //      if (game.getInventory().getFood() > 0) {
-            if (this.food == 0) {
-                game.getInventory().addFood(-3);
-                this.food = 3;
+            if (game.getInventory().getFood() > 0) {
+                if (this.food == 0) {
+                    game.getInventory().addFood(-3);
+                    this.food = 3;
+                }
+                this.setSpeed(4); // the eagle BOOKS it once it has the food
             }
-            this.setSpeed(4); // the eagle BOOKS it once it has the food
-            //      }
         }
 
-        if (this.isMarkedForRemoval() && isClosed(getTrackedTarget(), engine)) {
+        if (this.isMarkedForRemoval() && getTrackedTarget() != null
+                && isClosed(getTrackedTarget(), engine)) {
             game.getInventory().addFood(this.food);
         }
     }

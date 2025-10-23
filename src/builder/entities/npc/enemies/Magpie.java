@@ -10,6 +10,9 @@ import engine.game.HasPosition;
 import engine.timing.FixedTimer;
 import engine.timing.RepeatingTimer;
 
+/**
+ * The type Magpie.
+ */
 public class Magpie extends Enemy {
 
     private static final SpriteGroup art = SpriteGallery.magpie;
@@ -17,16 +20,24 @@ public class Magpie extends Enemy {
 
     private final RepeatingTimer directionalUpdateTimer = new RepeatingTimer(30);
 
+    /**
+     * Instantiates a new Magpie.
+     *
+     * @require the tracked target must exist
+     * @param x             the x
+     * @param y             the y
+     * @param trackedTarget the tracked target
+     */
     public Magpie(int x, int y, HasPosition trackedTarget) {
         super(x, y);
         setTrackedTarget(trackedTarget);
         setSprite(art.getSprite("down"));
         setLifespan(new FixedTimer(10000));
-        setTargetDirection(getTrackedTarget().getX(), getTrackedTarget().getY());
+        setTargetDirection(trackedTarget.getX(), trackedTarget.getY());
     }
 
     @Override
-    public void updateAttack (EngineState engine, GameState game){
+    public void updateAttack(EngineState engine, GameState game) {
         this.directionalUpdateTimer.tick();
 
         Player player = game.getPlayer();
@@ -46,8 +57,4 @@ public class Magpie extends Enemy {
     public SpriteGroup getSpriteGroup() {
         return art;
     }
-
-
-    @Override
-    public void interact(EngineState engine, GameState game) {}
 }
