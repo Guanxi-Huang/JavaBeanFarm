@@ -70,13 +70,13 @@ public class Eagle extends Enemy {
         Player player = game.getPlayer();
         if (player != null && isClosed(player, engine) && isAttacking()) {
             setAttacking(false);
-            if (game.getInventory().getFood() > 0) {
-                if (this.food == 0) {
-                    game.getInventory().addFood(-3);
-                    this.food = 3;
-                }
-                this.setSpeed(4); // the eagle BOOKS it once it has the food
+            //  if (game.getInventory().getFood() > 0) {
+            if (this.food == 0) {
+                game.getInventory().addFood(-3);
+                this.food = 3;
             }
+            this.setSpeed(4); // the eagle BOOKS it once it has the food
+            // }
         }
 
         if (this.isMarkedForRemoval() && getTrackedTarget() != null
