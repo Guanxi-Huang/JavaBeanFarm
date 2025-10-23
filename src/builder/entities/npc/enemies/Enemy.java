@@ -171,6 +171,9 @@ public abstract class Enemy extends Npc {
      * @param trackedTargetY the tracked target y
      */
     public void updateSprite(int trackedTargetY) {
+        if (getSpriteGroup() == null) {
+            return;
+        }
         if (trackedTargetY > this.getY()) {
             this.setSprite(getSpriteGroup().getSprite("down"));
         } else {
@@ -187,6 +190,14 @@ public abstract class Enemy extends Npc {
      * @return the boolean
      */
     public boolean isClosed(HasPosition target, EngineState engine) {
+        if (engine == null || target == null) {
+            return false;
+        }
+        final var dims = engine.getDimensions();
+        if (dims == null) {
+            return false;
+        }
+
         return distanceFrom(target) < engine.getDimensions().tileSize();
     }
 
@@ -221,5 +232,6 @@ public abstract class Enemy extends Npc {
         }
         this.move();
     }
+
 
 }

@@ -20,7 +20,6 @@ public class Eagle extends Enemy {
     /**
      * Instantiates a new Eagle.
      *
-     * @require the tracked target must exist
      * @param x             the x
      * @param y             the y
      * @param trackedTarget the tracked target
@@ -32,7 +31,13 @@ public class Eagle extends Enemy {
         this.setSpeed(2);
         setTrackedTarget(trackedTarget);
         setLifespan(new FixedTimer(5000));
-        setTargetDirection(trackedTarget.getX(), trackedTarget.getY());
+        int initializeDirection = 20;
+        if (trackedTarget != null) {
+            setTargetDirection(trackedTarget.getX(), trackedTarget.getY());
+        } else {
+            initializeDirection = 90;
+        }
+        this.setDirection(initializeDirection);
     }
 
     @Override

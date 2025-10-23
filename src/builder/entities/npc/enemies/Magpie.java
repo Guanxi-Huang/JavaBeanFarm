@@ -16,7 +16,7 @@ import engine.timing.RepeatingTimer;
 public class Magpie extends Enemy {
 
     private static final SpriteGroup art = SpriteGallery.magpie;
-    public int coins = 0;
+    private int coins = 0;
 
     private final RepeatingTimer directionalUpdateTimer = new RepeatingTimer(30);
 
@@ -33,7 +33,32 @@ public class Magpie extends Enemy {
         setTrackedTarget(trackedTarget);
         setSprite(art.getSprite("down"));
         setLifespan(new FixedTimer(10000));
-        setTargetDirection(trackedTarget.getX(), trackedTarget.getY());
+
+        int initializeDirection = 0;
+        if (trackedTarget != null) {
+            setTargetDirection(trackedTarget.getX(), trackedTarget.getY());
+        } else {
+            initializeDirection = 90;
+        }
+        this.setDirection(initializeDirection);
+    }    
+
+    /**
+     * Gets coins.
+     *
+     * @return the coins
+     */
+    public int getCoins() {
+        return coins;
+    }
+
+    /**
+     * Sets coins.
+     *
+     * @param coins the coins
+     */
+    public void setCoins(int coins) {
+        this.coins = coins;
     }
 
     @Override

@@ -155,7 +155,9 @@ public class EnemyManager implements Tickable, Interactable, RenderableGroup {
      * @return the eagle
      */
     public Eagle mkE(Player player) {
-        return new Eagle(this.spawnX, this.spawnY, player);
+        final Eagle eagle = new Eagle(this.spawnX, this.spawnY, player);
+        this.birds.add(eagle);
+        return eagle;
     }
 
     @Override

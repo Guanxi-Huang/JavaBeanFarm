@@ -121,7 +121,16 @@ public class GuardBee extends Npc {
         }
     }
 
+    /**
+     * Sets move direction.
+     *
+     * @param target the target
+     */
     public void setMoveDirection(HasPosition target) {
+        if (target == null) {
+            this.setDirection(90);
+            return;
+        }
         double deltaX = target.getX() - this.getX();
         double deltaY = target.getY() - this.getY();
         this.setDirection((int) Math.toDegrees(Math.atan2(deltaY, deltaX)));
