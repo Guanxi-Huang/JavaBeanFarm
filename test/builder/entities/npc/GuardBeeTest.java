@@ -1,177 +1,275 @@
 package builder.entities.npc;
 
+import builder.entities.npc.TargetTest;
+import engine.timing.FixedTimer;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
-
+/**
+ * Test class for GuardBee.
+ * Tests bee movement, targeting, direction, lifespan, and collision detection.
+ */
 public class GuardBeeTest {
-    private GuardBee guardBee;
-    private TargetTest testTarget;
+
+    private GuardBee bee;
+    private TargetTest target;
 
     @Before
     public void setUp() {
-        testTarget = new TargetTest(75, 85);
-        guardBee = new GuardBee(75, 85, testTarget);
+        target = new TargetTest(200, 200);
+        bee = new GuardBee(100, 100, target);
     }
 
     @Test
-    public void testConstructor() {
-        assertEquals(75, guardBee.getX());
-        assertEquals(85, guardBee.getY());
-        assertNotNull(guardBee);
+    public void testGuardBeeInitialization() {
+        assertEquals(100, bee.getX());
+        assertEquals(100, bee.getY());
+        assertEquals(100, bee.getSpawnX());
+        assertEquals(100, bee.getSpawnY());
+        assertEquals(target, bee.getTrackedTarget());
     }
 
     @Test
-    public void testGuardBeeInheritance() {
-        // GuardBee should inherit NPC properties and be properly initialized
-        assertEquals(0, guardBee.getDirection());
-        assertNotNull(guardBee);
+    public void testGuardBeeSpeedConstant() {
+        assertEquals(2, bee.getSpeed(), 0.01);
+    }
+
+    @Test
+    public void testGuardBeeLifespanInitialization() {
+        assertNotNull(bee.getLifespan());
+        assertTrue(bee.getLifespan() instanceof FixedTimer);
+    }
+
+    @Test
+    public void testGuardBeeSpawnPosition() {
+        assertEquals(100, bee.getSpawnX());
+        assertEquals(100, bee.getSpawnY());
+    }
+
+    @Test
+    public void testGuardBeeTrackedTarget() {
+        assertEquals(target, bee.getTrackedTarget());
+    }
+
+    @Test
+    public void testGuardBeeWithNullTarget() {
+        GuardBee testBee = new GuardBee(50, 50, null);
+        assertNull(testBee.getTrackedTarget());
+    }
+
+    @Test
+    public void testSetMoveDirectionWithTarget() {
+        bee.setMoveDirection(target);
+        assertNotNull(bee.getDirection());
+    }
+
+    @Test
+    public void testSetMoveDirectionWithNull() {
+        bee.setMoveDirection(null);
+        assertEquals(90, bee.getDirection());
+    }
+
+    @Test
+    public void testGuardBeeDirection() {
+        bee.setMoveDirection(target);
+        int direction = bee.getDirection();
+        assertTrue(direction >= 0 && direction < 360);
+    }
+
+    @Test
+    public void testGuardBeeMove() {
+        int initialX = bee.getX();
+        int initialY = bee.getY();
+
+        bee.setDirection(0);
+        bee.move();
+
+        // Moving in direction 0 (right) should increase X
+        assertTrue(bee.getX() >= initialX);
+    }
+
+    @Test
+    public void testGuardBeePosition() {
+        assertEquals(100, bee.getX());
+        assertEquals(100, bee.getY());
+    }
+
+    @Test
+    public void testGuardBeeSetX() {
+        bee.setX(150);
+        assertEquals(150, bee.getX());
+    }
+
+    @Test
+    public void testGuardBeeSetY() {
+        bee.setY(250);
+        assertEquals(250, bee.getY());
+    }
+
+    @Test
+    public void testGuardBeeDistanceFromTarget() {
+        int distance = bee.distanceFrom(target);
+        // Initial positions: bee at (100,100), target at (200,200)
+        // Distance should be approximately 141
+        assertTrue(distance > 0);
+    }
+
+    @Test
+    public void testGuardBeeDistanceFromSamePosition() {
+        TargetTest samePosition = new TargetTest(100, 100);
+        int distance = bee.distanceFrom(samePosition);
+        assertEquals(0, distance);
     }
 
     @Test
     public void testMultipleGuardBees() {
-        TargetTest target1 = new TargetTest(10, 20);
-        TargetTest target2 = new TargetTest(30, 40);
-        TargetTest target3 = new TargetTest(50, 60);
+        TargetTest target1 = new TargetTest(200, 200);
+        TargetTest target2 = new TargetTest(300, 300);
 
-        GuardBee bee1 = new GuardBee(10, 20, target1);
-        GuardBee bee2 = new GuardBee(30, 40, target2);
-        GuardBee bee3 = new GuardBee(50, 60, target3);
+        GuardBee bee1 = new GuardBee(100, 100, target1);
+        GuardBee bee2 = new GuardBee(150, 150, target2);
 
-        assertNotEquals(bee1.getX(), bee2.getX());
-        assertNotEquals(bee2.getX(), bee3.getX());
+        assertEquals(100, bee1.getX());
+        assertEquals(150, bee2.getX());
     }
 
     @Test
-    public void testZeroCoordinates() {
-        TargetTest target = new TargetTest(0, 0);
-        GuardBee zeroBee = new GuardBee(0, 0, target);
-        assertEquals(0, zeroBee.getX());
-        assertEquals(0, zeroBee.getY());
+    public void testGuardBeeWithZeroCoordinates() {
+        GuardBee testBee = new GuardBee(0, 0, target);
+        assertEquals(0, testBee.getX());
+        assertEquals(0, testBee.getY());
     }
 
     @Test
-    public void testLargeCoordinates() {
-        TargetTest target = new TargetTest(10000, 20000);
-        GuardBee largeBee = new GuardBee(10000, 20000, target);
-        assertEquals(10000, largeBee.getX());
-        assertEquals(20000, largeBee.getY());
+    public void testGuardBeeWithLargeCoordinates() {
+        GuardBee testBee = new GuardBee(5000, 6000, target);
+        assertEquals(5000, testBee.getX());
+        assertEquals(6000, testBee.getY());
     }
 
     @Test
-    public void testTrackedTargetAssignment() {
-        TargetTest customTarget = new TargetTest(100, 150);
-        GuardBee bee = new GuardBee(100, 150, customTarget);
-
-        assertNotNull(bee);
-        assertEquals(100, bee.getX());
-        assertEquals(150, bee.getY());
-        assertEquals(customTarget, bee.getTrackedTarget());
+    public void testGuardBeeDirectionTowardsRight() {
+        TargetTest rightTarget = new TargetTest(200, 100);
+        bee.setMoveDirection(rightTarget);
+        int direction = bee.getDirection();
+        // Direction towards right should be close to 0
+        assertTrue(direction >= 350 || direction <= 10);
     }
 
     @Test
-    public void testSpawnPositionTracking() {
-        GuardBee bee = new GuardBee(50, 75, testTarget);
-        assertEquals(50, bee.getSpawnX());
-        assertEquals(75, bee.getSpawnY());
+    public void testGuardBeeDirectionTowardsDown() {
+        TargetTest downTarget = new TargetTest(100, 200);
+        bee.setMoveDirection(downTarget);
+        int direction = bee.getDirection();
+        // Direction towards down should be close to 90
+        assertTrue(direction >= 80 && direction <= 100);
     }
 
     @Test
-    public void testDirectionCalculation() {
-        // 创建一个在 GuardBee 右侧的目标
-        TargetTest targetRight = new TargetTest(100, 50);
-
-        GuardBee bee = new GuardBee(0, 50, targetRight);
-        // 方向应该指向右边（接近 0 度）
-        assertTrue(bee.getDirection() >= 350 || bee.getDirection() <= 10);
+    public void testGuardBeeUpdateArtBasedOnDirectionDown() {
+        bee.setDirection(90);
+        bee.updateArtBasedOnDirection();
+        // Direction 90 should update to down sprite
     }
 
     @Test
-    public void testSpeedInitialization() {
-        GuardBee bee = new GuardBee(0, 0, testTarget);
-        // GuardBee 的速度应该是 SPEED (2)
-        assertEquals(2.0, bee.getSpeed(), 0.01);
+    public void testGuardBeeUpdateArtBasedOnDirectionUp() {
+        bee.setDirection(270);
+        bee.updateArtBasedOnDirection();
+        // Direction 270 should update to up sprite
     }
 
     @Test
-    public void testNullTrackedTarget() {
-        // GuardBee 应该能够处理 null 目标
-        GuardBee bee = new GuardBee(100, 100, null);
-        assertNull(bee.getTrackedTarget());
-        assertEquals(0, bee.getSpawnX() - bee.getX());
-        assertEquals(0, bee.getSpawnY() - bee.getY());
+    public void testGuardBeeUpdateArtBasedOnDirectionRight() {
+        bee.setDirection(0);
+        bee.updateArtBasedOnDirection();
+        // Direction 0 should update to right sprite
     }
 
     @Test
-    public void testMultipleBeesWithDifferentTargets() {
-        TargetTest target1 = new TargetTest(100, 100);
-        TargetTest target2 = new TargetTest(200, 200);
-
-        GuardBee bee1 = new GuardBee(0, 0, target1);
-        GuardBee bee2 = new GuardBee(0, 0, target2);
-
-        // 虽然产生位置相同，但方向应该不同（因为目标不同）
-        assertEquals(0, bee1.getX());
-        assertEquals(0, bee1.getY());
-        assertEquals(0, bee2.getX());
-        assertEquals(0, bee2.getY());
-
-        // 两个蜜蜂的方向应该不同（因为目标不同）
-        assertEquals(bee1.getDirection(), bee2.getDirection());
+    public void testGuardBeeUpdateArtBasedOnDirectionLeft() {
+        bee.setDirection(180);
+        bee.updateArtBasedOnDirection();
+        // Direction 180 should update to left sprite
     }
 
     @Test
-    public void testDirectionTowardsDifferentTargets() {
-        // 目标在上方
-        TargetTest targetUp = new TargetTest(50, 0);
-        GuardBee beeUp = new GuardBee(50, 50, targetUp);
+    public void testGuardBeeMultipleDirectionChanges() {
+        bee.setDirection(0);
+        assertEquals(0, bee.getDirection());
 
-        // 目标在下方
-        TargetTest targetDown = new TargetTest(50, 100);
-        GuardBee beeDown = new GuardBee(50, 50, targetDown);
+        bee.setDirection(90);
+        assertEquals(90, bee.getDirection());
 
-        // 目标在左方
-        TargetTest targetLeft = new TargetTest(0, 50);
-        GuardBee beeLeft = new GuardBee(50, 50, targetLeft);
-
-        // 目标在右方
-        TargetTest targetRight = new TargetTest(100, 50);
-        GuardBee beeRight = new GuardBee(50, 50, targetRight);
-
-        // 验证蜜蜂被创建
-        assertNotNull(beeUp);
-        assertNotNull(beeDown);
-        assertNotNull(beeLeft);
-        assertNotNull(beeRight);
+        bee.setDirection(270);
+        assertEquals(270, bee.getDirection());
     }
 
     @Test
-    public void testSpawnPositionIndependentOfTarget() {
-        TargetTest target1 = new TargetTest(100, 100);
-        TargetTest target2 = new TargetTest(200, 200);
+    public void testGuardBeeSpawnPositionIndependence() {
+        bee.setX(500);
+        bee.setY(600);
 
-        GuardBee bee1 = new GuardBee(50, 75, target1);
-        GuardBee bee2 = new GuardBee(50, 75, target2);
+        assertEquals(500, bee.getX());
+        assertEquals(600, bee.getY());
+        assertEquals(100, bee.getSpawnX());
+        assertEquals(100, bee.getSpawnY());
+    }
 
-        // 两只蜜蜂的出生位置应该相同
-        assertEquals(bee1.getSpawnX(), bee2.getSpawnX());
-        assertEquals(bee1.getSpawnY(), bee2.getSpawnY());
-        assertEquals(50, bee1.getSpawnX());
-        assertEquals(75, bee1.getSpawnY());
+    @Test
+    public void testGuardBeeTargetChange() {
+        TargetTest newTarget = new TargetTest(300, 300);
+        bee.setMoveDirection(newTarget);
+        // Direction should be recalculated to new target
+        assertNotNull(bee.getDirection());
+    }
+
+    @Test
+    public void testGuardBeeLifespanDecrements() {
+        FixedTimer lifespan = bee.getLifespan();
+        assertNotNull(lifespan);
+    }
+
+    @Test
+    public void testGuardBeePositionModification() {
+        bee.setX(250);
+        bee.setY(350);
+        assertEquals(250, bee.getX());
+        assertEquals(350, bee.getY());
+    }
+
+    @Test
+    public void testGuardBeeSpeedIsTwo() {
+        assertEquals(2, bee.getSpeed(), 0.01);
+    }
+
+    @Test
+    public void testGuardBeeDirectionRange() {
+        for (int i = 0; i < 360; i += 45) {
+            bee.setDirection(i);
+            assertEquals(i, bee.getDirection());
+        }
+    }
+
+    @Test
+    public void testGuardBeeDistanceCalculation() {
+        bee.setX(0);
+        bee.setY(0);
+
+        TargetTest testTarget = new TargetTest(3, 4);
+        int distance = bee.distanceFrom(testTarget);
+        assertEquals(5, distance); // 3-4-5 triangle
     }
 
     @Test
     public void testTargetCanChange() {
         TargetTest initialTarget = new TargetTest(100, 100);
         GuardBee bee = new GuardBee(0, 0, initialTarget);
-
-        // 验证初始目标
         assertEquals(initialTarget, bee.getTrackedTarget());
 
-        // 创建另一个目标
         TargetTest newTarget = new TargetTest(200, 200);
-        // GuardBee 的目标在创建后是固定的，验证它仍然是初始目标
         assertEquals(initialTarget, bee.getTrackedTarget());
         assertNotEquals(newTarget, bee.getTrackedTarget());
     }

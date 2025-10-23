@@ -55,6 +55,19 @@ public abstract class Tile extends Entity
     }
 
     /**
+     * Constructs an instance of {@link Tile}.
+     *
+     * @requires x >= 0, x is less than the window width
+     * @requires y >= 0, y is less than the window height
+     * @requires The given sprite group must contain a 'default' sprite.
+     * @param x The x-axis (horizontal) coordinate.
+     * @param y The y-axis (vertical) coordinate.
+     */
+    public Tile(int x, int y) {
+        super(x, y);
+    }
+
+    /**
      * Set the sprite group for this tile and updates the current sprite (see {@link
      * #updateSprite(String)}) to the 'default' sprite of the given group.
      *
