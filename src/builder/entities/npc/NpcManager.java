@@ -15,7 +15,8 @@ import java.util.List;
  * Manages a collection of NPCs.
  */
 public class NpcManager implements Interactable, Tickable, RenderableGroup {
-    public final ArrayList<Npc> npcs = new ArrayList<>();
+
+    private final ArrayList<Npc> npcs = new ArrayList<>();
 
     /**
      * Instantiates a new Npc manager.
@@ -23,10 +24,19 @@ public class NpcManager implements Interactable, Tickable, RenderableGroup {
     public NpcManager() {}
 
     /**
+     * Gets npcs.
+     *
+     * @return the npcs
+     */
+    public ArrayList<Npc> getNpcs() {
+        return npcs;
+    }
+
+    /**
      * Cleanup.
      */
     public void cleanup() {
-        for (int i = this.npcs.size() - 1; i >= 0; i -= 1) {
+        for (int i = this.getNpcs().size() - 1; i >= 0; i -= 1) {
             if (this.npcs.get(i).isMarkedForRemoval()) {
                 this.npcs.remove(i);
             }
@@ -39,13 +49,13 @@ public class NpcManager implements Interactable, Tickable, RenderableGroup {
      * @param npc npc to add to the manager for it to well manage/track.
      */
     public void addNpc(Npc npc) {
-        this.npcs.add(npc);
+        this.getNpcs().add(npc);
     }
 
     @Override
     public void tick(EngineState state, GameState game) {
         this.cleanup();
-        for (Npc npc : npcs) {
+        for (Npc npc : getNpcs()) {
             npc.tick(state, game);
         }
     }
@@ -60,11 +70,11 @@ public class NpcManager implements Interactable, Tickable, RenderableGroup {
     /**
      * get interactable.
      *
-     * @return an ArrayList<Interactable> of interactable
+     * @return an ArrayList of interactable
      */
     private ArrayList<Interactable> getInteractables() {
         final ArrayList<Interactable> interactables = new ArrayList<>();
-        for (Npc npc : npcs) {
+        for (Npc npc : getNpcs()) {
             if (npc != null) {
                 interactables.add(npc);
             }
@@ -74,6 +84,6 @@ public class NpcManager implements Interactable, Tickable, RenderableGroup {
 
     @Override
     public List<Renderable> render() {
-        return new ArrayList<>(this.npcs);
+        return new ArrayList<>(this.getNpcs());
     }
 }

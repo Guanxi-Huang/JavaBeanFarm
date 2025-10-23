@@ -48,7 +48,7 @@ public class BeeHive extends Npc {
         timer.tick();
         Npc npc = this.checkAndSpawnBee(game.getEnemies().getBirds());
         if (npc != null) {
-            game.getNpcs().npcs.add(npc);
+            game.getNpcs().getNpcs().add(npc);
         }
         if (timer.isFinished()) {
             this.loaded = true;

@@ -19,7 +19,7 @@ public class GuardBee extends Npc {
     private final int spawnY;
     private static final int SPEED = 2;
     private static final SpriteGroup art = SpriteGallery.bee;
-    final FixedTimer lifespan = new FixedTimer(300);
+    private final FixedTimer lifespan = new FixedTimer(300);
     private final HasPosition trackedTarget;
 
 
@@ -68,6 +68,15 @@ public class GuardBee extends Npc {
      */
     public HasPosition getTrackedTarget() {
         return this.trackedTarget;
+    }
+
+    /**
+     * Gets lifespan.
+     *
+     * @return the lifespan
+     */
+    public FixedTimer getLifespan() {
+        return lifespan;
     }
 
     /**

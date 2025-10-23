@@ -79,7 +79,8 @@ public class JavaBeanFarm implements Game {
      *
      * @param dimensions The dimensions we want for this game.
      * @param mapReader A reader the contains a description of the world map.
-     * @param detailReader A reader the contains the overlay details for the game, e.g. spawner locations.
+     * @param detailReader A reader the contains the overlay details for the game,
+     *                     e.g. spawner locations.
      * @throws IOException If the game is unable to find or open the default world map file.
      * @throws WorldLoadException If the default world map file cannot be parsed successfully.
      */
@@ -158,8 +159,6 @@ public class JavaBeanFarm implements Game {
             throws IOException, WorldLoadException {
         this(dimensions, new FileReader(mapFile), new FileReader(detailsFile));
     }
-
-    public void addSpawner () {}
 
     /**
      * Ticks the internal game state forward by one frame. a
