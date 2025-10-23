@@ -31,6 +31,8 @@ public class EnemyManager implements Tickable, Interactable, RenderableGroup {
      * @param dimensions the dimensions
      */
     public EnemyManager(Dimensions dimensions) {
+        this.spawners = new ArrayList<>();
+        this.birds = new ArrayList<>();
     }
 
     /**
@@ -81,8 +83,8 @@ public class EnemyManager implements Tickable, Interactable, RenderableGroup {
     /**
      * Sets spawners.
      */
-    public void setSpawners() {
-        this.spawners = new ArrayList<>();
+    public void setSpawners(ArrayList<Spawner> spawners) {
+        this.spawners = spawners;
     }
 
     /**
@@ -97,8 +99,8 @@ public class EnemyManager implements Tickable, Interactable, RenderableGroup {
     /**
      * Sets birds.
      */
-    public void setBirds() {
-        this.birds = new ArrayList<>();
+    public void setBirds(ArrayList<Enemy> birds) {
+        this.birds = birds;
     }
 
     /**
