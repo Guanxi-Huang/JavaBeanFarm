@@ -31,7 +31,6 @@ public class OverlayBuilder {
      *
      * @param label label we are searching for
      * @param contents file contents we are searching through
-     * @return a {@link ArrayList<String>} of lines within the searched for section.
      * @throws IOException if the section is not found
      */
     public static List<String> getSection(String label, String contents) throws IOException {
@@ -53,6 +52,9 @@ public class OverlayBuilder {
     }
 
     /**
+     * Search the given string for a line equivalent to the given label surrounded by a pair of ':'
+     * then collect all lines of text between that label and the next line that reads as 'end;'
+     *
      * @param line line to process.
      * @return a new {@link SpawnerDetails} holding the information extracted from the line.
      */
@@ -102,8 +104,16 @@ public class OverlayBuilder {
         };
     }
 
-    public static List<SpawnerDetails> getEnemySpawnDetailsFromString(String label, String detailsContent)
-            throws IOException {
+    /**
+     * Gets enemy spawn details from string.
+     *
+     * @param label          the label
+     * @param detailsContent the details content
+     * @return the enemy spawn details from string
+     * @throws IOException the io exception
+     */
+    public static List<SpawnerDetails> getEnemySpawnDetailsFromString(
+            String label, String detailsContent) throws IOException {
         List<String> section = OverlayBuilder.getSection(label, detailsContent);
         final List<SpawnerDetails> list = new ArrayList<>();
         for (String entry : section) {
@@ -112,6 +122,12 @@ public class OverlayBuilder {
         return list;
     }
 
+    /**
+     * Extract player details from line player details.
+     *
+     * @param line the line
+     * @return the player details
+     */
     public static PlayerDetails extractPlayerDetailsFromLine(String line) {
         String[] chunks = line.split(" ");
         assert chunks.length == 4; // should always be 3 chunks in a correctly shaped line.
@@ -161,6 +177,13 @@ public class OverlayBuilder {
         };
     }
 
+    /**
+     * Gets player details from file.
+     *
+     * @param detailsContent the details content
+     * @return the player details from file
+     * @throws IOException the io exception
+     */
     public static PlayerDetails getPlayerDetailsFromFile(String detailsContent) throws IOException {
         List<String> section = OverlayBuilder.getSection("chickenFarmer", detailsContent);
         assert section.size()
@@ -169,6 +192,13 @@ public class OverlayBuilder {
         return OverlayBuilder.extractPlayerDetailsFromLine(entry);
     }
 
+    /**
+     * Gets cabbage spawn details from string.
+     *
+     * @param detailsContent the details content
+     * @return the cabbage spawn details from string
+     * @throws IOException the io exception
+     */
     public static List<CabbageDetails> getCabbageSpawnDetailsFromString(String detailsContent)
             throws IOException {
         final List<String> section = OverlayBuilder.getSection("cabbages", detailsContent);
