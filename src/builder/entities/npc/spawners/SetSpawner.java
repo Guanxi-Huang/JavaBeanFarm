@@ -14,11 +14,24 @@ public abstract class SetSpawner implements Spawner {
     private int y;
     private TickTimer timer;
 
+    /**
+     * Instantiates a new Set spawner.
+     *
+     * @param x the x
+     * @param y the y
+     */
     public SetSpawner(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * Instantiates a new Set spawner.
+     *
+     * @param x        the x
+     * @param y        the y
+     * @param duration the duration
+     */
     public SetSpawner(int x, int y, int duration) {
         this.x = x;
         this.y = y;
@@ -54,8 +67,8 @@ public abstract class SetSpawner implements Spawner {
     public void tick(EngineState state, GameState game) {
         this.timer.tick();
         if (this.getTimer().isFinished()) {
-            game.getEnemies().spawnX = this.getX();
-            game.getEnemies().spawnY = this.getY();
+            game.getEnemies().setSpawnX(this.getX());
+            game.getEnemies().setSpawnY(this.getY());
             spawn(game);
         }
     }

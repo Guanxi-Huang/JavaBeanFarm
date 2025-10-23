@@ -10,7 +10,6 @@ import builder.ui.SpriteGallery;
 import engine.EngineState;
 import engine.art.sprites.SpriteGroup;
 
-import java.util.ArrayList;
 
 /**
  * The type Scarecrow.
@@ -44,7 +43,7 @@ public class Scarecrow extends Npc {
         EnemyManager enemies = game.getEnemies();
         final int scareRadius = state.getDimensions().tileSize() * 4;
 
-        for (Enemy enemy : enemies.Birds) {
+        for (Enemy enemy : enemies.getBirds()) {
             if (enemy instanceof Magpie || enemy instanceof Pigeon) {
                 if (this.distanceFrom(enemy) < scareRadius) {
                     enemy.setAttacking(false);

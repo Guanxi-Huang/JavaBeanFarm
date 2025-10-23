@@ -9,16 +9,26 @@ import engine.art.sprites.SpriteGroup;
 import engine.game.HasPosition;
 import engine.timing.FixedTimer;
 
+/**
+ * The type Eagle.
+ */
 public class Eagle extends Enemy {
 
     private static final SpriteGroup art = SpriteGallery.eagle;
     private int food = 0;
+    private int direction = 20;
 
+    /**
+     * Instantiates a new Eagle.
+     *
+     * @param x             the x
+     * @param y             the y
+     * @param trackedTarget the tracked target
+     */
     public Eagle(int x, int y, HasPosition trackedTarget) {
         super(x, y);
 
         // derive direction based on where the eagle is and the initial target is
-        int direction = 20;
         this.setDirection(direction);
         this.setSpeed(2);
         setTrackedTarget(trackedTarget);
@@ -32,8 +42,7 @@ public class Eagle extends Enemy {
     }
 
     @Override
-    public void updateAttack (EngineState engine, GameState game){
-
+    public void updateAttack(EngineState engine, GameState game) {
         Player player = game.getPlayer();
         if (isClosed(player, engine) && isAttacking()) {
             setAttacking(false);

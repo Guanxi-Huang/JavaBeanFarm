@@ -44,9 +44,9 @@ public class PigeonSpawner extends SetSpawner {
             }
 
             if (this.getTimer().isFinished()) {
-                game.getEnemies().spawnX = this.getX();
-                game.getEnemies().spawnY = this.getY();
-                game.getEnemies().Birds.add(game.getEnemies().mkP(closest));
+                game.getEnemies().setSpawnX(this.getX());
+                game.getEnemies().setSpawnY(this.getY());
+                game.getEnemies().getBirds().add(game.getEnemies().mkP(closest));
             }
         }
     }
