@@ -52,8 +52,7 @@ public class EnemyManager implements Tickable, Interactable, RenderableGroup {
     }
 
     public Eagle mkE(Player player) {
-        final Eagle eagle = new Eagle(this.spawnX, this.spawnY, player);
-        return eagle;
+        return new Eagle(this.spawnX, this.spawnY, player);
     }
 
     @Override

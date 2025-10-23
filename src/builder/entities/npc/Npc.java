@@ -8,19 +8,38 @@ import engine.EngineState;
 import engine.game.Entity;
 import engine.game.HasPosition;
 
+/**
+ * The type Npc.
+ */
 public class Npc extends Entity implements Interactable, Tickable, Directable {
 
     private int direction = 0;
     private double speed = 1;
 
+    /**
+     * Instantiates a new Npc.
+     *
+     * @param x the x
+     * @param y the y
+     */
     public Npc(int x, int y) {
         super(x, y);
     }
 
+    /**
+     * Gets speed.
+     *
+     * @return the speed
+     */
     public double getSpeed() {
         return speed;
     }
 
+    /**
+     * Sets speed.
+     *
+     * @param speed the speed
+     */
     public void setSpeed(int speed) {
         this.speed = speed;
     }
