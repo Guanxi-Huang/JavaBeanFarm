@@ -8,3 +8,4 @@ template/
 *.class
 .DS_Store
 __MACOSX/
+lib/mockito-core-5.12.0.jar
