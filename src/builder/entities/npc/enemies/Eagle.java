@@ -32,7 +32,7 @@ public class Eagle extends Enemy {
         // derive direction based on where the eagle is and the initial target is
         this.setSpeed(2);
         setTrackedTarget(trackedTarget);
-        setLifespan(new FixedTimer(5000));
+        setLifespan(new FixedTimer(10000));
         int initializeDirection = 20;
         if (trackedTarget != null) {
             setTargetDirection(trackedTarget.getX(), trackedTarget.getY());
