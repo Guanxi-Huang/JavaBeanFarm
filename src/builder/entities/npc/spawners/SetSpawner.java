@@ -10,8 +10,8 @@ import engine.timing.TickTimer;
  * The type Set spawner.
  */
 public abstract class SetSpawner implements Spawner {
-    private int x;
-    private int y;
+    private int positionX;
+    private int positionY;
     private TickTimer timer;
 
     /**
@@ -21,8 +21,8 @@ public abstract class SetSpawner implements Spawner {
      * @param y the y
      */
     public SetSpawner(int x, int y) {
-        this.x = x;
-        this.y = y;
+        this.positionX = x;
+        this.positionY = y;
     }
 
     /**
@@ -33,8 +33,8 @@ public abstract class SetSpawner implements Spawner {
      * @param duration the duration
      */
     public SetSpawner(int x, int y, int duration) {
-        this.x = x;
-        this.y = y;
+        this.positionX = x;
+        this.positionY = y;
         this.timer = new RepeatingTimer(duration);
     }
 
@@ -45,22 +45,22 @@ public abstract class SetSpawner implements Spawner {
 
     @Override
     public int getX() {
-        return this.x;
+        return this.positionX;
     }
 
     @Override
     public void setX(int x) {
-        this.x = x;
+        this.positionX = x;
     }
 
     @Override
     public int getY() {
-        return this.y;
+        return this.positionY;
     }
 
     @Override
     public void setY(int y) {
-        this.y = y;
+        this.positionY = y;
     }
 
     @Override
@@ -75,8 +75,13 @@ public abstract class SetSpawner implements Spawner {
 
     protected abstract void spawn(GameState game);
 
+    /**
+     * Spawn point has position.
+     *
+     * @return the has position
+     */
     public HasPosition spawnPoint() {
-        return new SetSpawner(x, y) {
+        return new SetSpawner(positionX, positionY) {
             @Override
             protected void spawn(GameState game){}
         };

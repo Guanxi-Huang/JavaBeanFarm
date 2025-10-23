@@ -197,7 +197,6 @@ public abstract class Enemy extends Npc {
         if (dims == null) {
             return false;
         }
-
         return distanceFrom(target) < engine.getDimensions().tileSize();
     }
 

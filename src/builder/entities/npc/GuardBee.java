@@ -40,7 +40,6 @@ public class GuardBee extends Npc {
         this.spawnX = x;
         this.spawnY = y;
         this.setSpeed(GuardBee.SPEED);
-
         setMoveDirection(trackedTarget);
     }
 

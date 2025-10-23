@@ -53,8 +53,6 @@ public class Pigeon extends Enemy {
             for (Tile tile : tiles) {
                 if (this.distanceFrom(tile) < distance) {
                     closest = tile;
-                } else {
-                    // do nothing
                 }
             }
             setTrackedTarget(closest);
@@ -64,8 +62,6 @@ public class Pigeon extends Enemy {
                     if (entity instanceof Cabbage cabbage) {
                         cabbage.markForRemoval();
                         setAttacking(false);
-                    } else {
-                        // do nothing
                     }
                 }
             }

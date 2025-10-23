@@ -58,7 +58,7 @@ public class NpcManager implements Interactable, Tickable, RenderableGroup {
     }
 
     /**
-     * Returns an ArrayList<Interactable> of interactable
+     * get interactable.
      *
      * @return an ArrayList<Interactable> of interactable
      */

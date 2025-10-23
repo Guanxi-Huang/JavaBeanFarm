@@ -61,7 +61,7 @@ public class JavaBeanFarm implements Game {
 
     private final BeanWorld world;
 
-    private Inventory inventory;
+    private final Inventory inventory;
     private final List<Overlay> overlays = new ArrayList<>();
 
     private static String readAllReader(Reader reader) throws IOException {
@@ -98,26 +98,27 @@ public class JavaBeanFarm implements Game {
         final List<SpawnerDetails> magpieSpawnPoints =
                 OverlayBuilder.getEnemySpawnDetailsFromString("magpiespawner", detailsContent);
         for (SpawnerDetails details : magpieSpawnPoints) {
-            this.enemies.add(new MagpieSpawner(details.getX(), details.getY(), details.getDuration()));
+            this.enemies.add(new MagpieSpawner(details.getX(),
+                    details.getY(), details.getDuration()));
         }
         final List<SpawnerDetails> eagleSpawnPoints =
                 OverlayBuilder.getEnemySpawnDetailsFromString("eaglespawner", detailsContent);
         for (SpawnerDetails details : eagleSpawnPoints) {
-            this.enemies.add(new EagleSpawner(details.getX(), details.getY(), details.getDuration()));
+            this.enemies.add(new EagleSpawner(details.getX(),
+                    details.getY(), details.getDuration()));
         }
         final List<SpawnerDetails> pigeonSpawnPoints =
                 OverlayBuilder.getEnemySpawnDetailsFromString("pigeonspawner", detailsContent);
         for (SpawnerDetails details : pigeonSpawnPoints) {
-            this.enemies.add(new PigeonSpawner(details.getX(), details.getY(), details.getDuration()));
+            this.enemies.add(new PigeonSpawner(details.getX(),
+                    details.getY(), details.getDuration()));
         }
 
         final List<CabbageDetails> cabbageSpawnPoints =
                 OverlayBuilder.getCabbageSpawnDetailsFromString(detailsContent);
-        for (CabbageDetails cabbageDetails :
-                cabbageSpawnPoints) { // HACK - can I improve this?
-            final int positionX = cabbageDetails.getX();
-            final int positionY = cabbageDetails.getY();
-            final List<Tile> tiles = this.world.tilesAtPosition(positionX, positionY, dimensions);
+        for (CabbageDetails details : cabbageSpawnPoints) { // HACK - can I improve this?
+            final List<Tile> tiles =
+                    this.world.tilesAtPosition(details.getX(), details.getY(), dimensions);
             for (Tile tile : tiles) {
                 if (tile instanceof Dirt) {
                     TinyInventory tempInventory = new TinyInventory(5, 100, 100);
@@ -144,6 +145,15 @@ public class JavaBeanFarm implements Game {
         this.overlays.add(new ResourceOverlay(dimensions));
     }
 
+    /**
+     * Instantiates a new Java bean farm.
+     *
+     * @param dimensions  the dimensions
+     * @param mapFile     the map file
+     * @param detailsFile the details file
+     * @throws IOException        the io exception
+     * @throws WorldLoadException the world load exception
+     */
     public JavaBeanFarm(Dimensions dimensions, String mapFile, String detailsFile)
             throws IOException, WorldLoadException {
         this(dimensions, new FileReader(mapFile), new FileReader(detailsFile));

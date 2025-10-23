@@ -13,6 +13,8 @@ import java.util.List;
 public class OverlayBuilder {
 
     /**
+     * load file.
+     *
      * @param filepath - location of the text file we wish to load
      * @return String representation of the contents of file found at the filepath.
      */
@@ -57,11 +59,11 @@ public class OverlayBuilder {
     public static SpawnerDetails extractSpawnDetailsFromLine(String line) {
         String[] chunks = line.split(" ");
         assert chunks.length == 3; // should always be 3 chunks in a correctly shaped line.
-        String[] xChunk = chunks[0].split(":");
-        String[] yChunk = chunks[1].split(":");
+        String[] chunkX = chunks[0].split(":");
+        String[] chunkY = chunks[1].split(":");
         String[] durationChunk = chunks[2].split(":");
-        final int x = Integer.parseInt(xChunk[1]);
-        final int y = Integer.parseInt(yChunk[1]);
+        final int x = Integer.parseInt(chunkX[1]);
+        final int y = Integer.parseInt(chunkY[1]);
         final int duration = Integer.parseInt(durationChunk[1]);
         return new SpawnerDetails() {
             @Override
@@ -113,12 +115,12 @@ public class OverlayBuilder {
     public static PlayerDetails extractPlayerDetailsFromLine(String line) {
         String[] chunks = line.split(" ");
         assert chunks.length == 4; // should always be 3 chunks in a correctly shaped line.
-        String[] xChunk = chunks[0].split(":");
-        String[] yChunk = chunks[1].split(":");
+        String[] chunkX = chunks[0].split(":");
+        String[] chunkY = chunks[1].split(":");
         String[] coinChunk = chunks[2].split(":");
         String[] foodChunk = chunks[3].split(":");
-        final int x = Integer.parseInt(xChunk[1]);
-        final int y = Integer.parseInt(yChunk[1]);
+        final int x = Integer.parseInt(chunkX[1]);
+        final int y = Integer.parseInt(chunkY[1]);
         final int coins = Integer.parseInt(coinChunk[1]);
         final int food = Integer.parseInt(foodChunk[1]);
         return new PlayerDetails() {
@@ -179,10 +181,10 @@ public class OverlayBuilder {
 
     private static CabbageDetails extractCabbageDetailsFromLine(String line) {
         final String[] chunks = line.split(" ");
-        String[] xChunk = chunks[0].split(":");
-        String[] yChunk = chunks[1].split(":");
-        final int x = Integer.parseInt(xChunk[1]);
-        final int y = Integer.parseInt(yChunk[1]);
+        String[] chunkX = chunks[0].split(":");
+        String[] chunkY = chunks[1].split(":");
+        final int x = Integer.parseInt(chunkX[1]);
+        final int y = Integer.parseInt(chunkY[1]);
         return new CabbageDetails() {
             @Override
             public int getX() {
