@@ -10,12 +10,28 @@ import engine.game.HasPosition;
 
 import java.util.List;
 
+/**
+ * The type Pigeon spawner.
+ */
 public class PigeonSpawner extends SetSpawner {
 
+    /**
+     * Instantiates a new Pigeon spawner.
+     *
+     * @param x the x
+     * @param y the y
+     */
     public PigeonSpawner(int x, int y) {
         super(x, y, 100);
     }
 
+    /**
+     * Instantiates a new Pigeon spawner.
+     *
+     * @param x        the x
+     * @param y        the y
+     * @param duration the duration
+     */
     public PigeonSpawner(int x, int y, int duration) {
         super(x, y, duration);
     }

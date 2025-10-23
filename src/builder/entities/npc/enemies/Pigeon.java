@@ -13,16 +13,32 @@ import engine.timing.FixedTimer;
 
 import java.util.List;
 
+/**
+ * The type Pigeon.
+ */
 public class Pigeon extends Enemy {
 
     private static final SpriteGroup art = SpriteGallery.pigeon;
 
+    /**
+     * Instantiates a new Pigeon.
+     *
+     * @param x the x
+     * @param y the y
+     */
     public Pigeon(int x, int y) {
         super(x, y);
         setSprite(art.getSprite("down"));
         setLifespan(new FixedTimer(3000));
     }
 
+    /**
+     * Instantiates a new Pigeon.
+     *
+     * @param x             the x
+     * @param y             the y
+     * @param trackedTarget the tracked target
+     */
     public Pigeon(int x, int y, HasPosition trackedTarget) {
         super(x, y);
         this.setSpeed(1);
@@ -37,16 +53,15 @@ public class Pigeon extends Enemy {
     }
 
     @Override
-    public void updateAttack(EngineState engine, GameState game) {
-
+    public void updateAttack(final engine.EngineState engine, final builder.GameState game) {
         List<Tile> tiles = game.getWorld().tileSelector(tile -> {
-                                    for (Entity entity : tile.getStackedEntities()) {
-                                        if (entity instanceof Cabbage) {
-                                            return true;
-                                        }
-                                    }
-                                    return false;
-                                });
+            for (Entity entity : tile.getStackedEntities()) {
+                if (entity instanceof Cabbage) {
+                    return true;
+                }
+            }
+            return false;
+        });
         if (!tiles.isEmpty()) {
             int distance = this.distanceFrom(tiles.getFirst());
             Tile closest = tiles.getFirst();
@@ -68,5 +83,7 @@ public class Pigeon extends Enemy {
         } else { // no cabbages to get
             setAttacking(false);
         }
+
     }
+
 }
