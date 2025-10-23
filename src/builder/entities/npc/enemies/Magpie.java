@@ -23,7 +23,7 @@ public class Magpie extends Enemy {
     /**
      * Instantiates a new Magpie.
      *
-     * @require the tracked target must exist
+     * @require x >= 0 && y >= 0;
      * @param x             the x
      * @param y             the y
      * @param trackedTarget the tracked target

@@ -23,6 +23,7 @@ public class Pigeon extends Enemy {
     /**
      * Instantiates a new Pigeon.
      *
+     * @require x >= 0 && y >= 0;
      * @param x the x
      * @param y the y
      */

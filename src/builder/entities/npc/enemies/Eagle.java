@@ -15,18 +15,20 @@ import engine.timing.FixedTimer;
 public class Eagle extends Enemy {
 
     private static final SpriteGroup art = SpriteGallery.eagle;
-    private int food = 0;
+
+    private int food;
 
     /**
      * Instantiates a new Eagle.
      *
+     * @require x >= 0 && y >= 0;
      * @param x             the x
      * @param y             the y
      * @param trackedTarget the tracked target
      */
     public Eagle(int x, int y, HasPosition trackedTarget) {
         super(x, y);
-
+        this.food = 0;
         // derive direction based on where the eagle is and the initial target is
         this.setSpeed(2);
         setTrackedTarget(trackedTarget);
@@ -38,6 +40,24 @@ public class Eagle extends Enemy {
             initializeDirection = 90;
         }
         this.setDirection(initializeDirection);
+    }
+
+    /**
+     * Gets food.
+     *
+     * @return the food
+     */
+    public int getFood() {
+        return food;
+    }
+
+    /**
+     * Sets food.
+     *
+     * @param food the food
+     */
+    public void setFood(int food) {
+        this.food = food;
     }
 
     @Override
