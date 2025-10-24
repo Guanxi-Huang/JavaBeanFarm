@@ -226,7 +226,7 @@ public abstract class Enemy extends Npc {
         } else {
             setTargetDirection(getSpawnX(), getSpawnY());
             updateSprite(getSpawnY());
-            if (isClosed(spawner.spawnPoint(), engine)) {
+            if (isClosed(getSpawner().spawnPoint(), engine)) {
                 markForRemoval();
             }
         }

@@ -127,9 +127,9 @@ public class EnemyManager implements Tickable, Interactable, RenderableGroup {
      * Cleanup.
      */
     public void cleanup() {
-        for (int i = this.birds.size() - 1; i >= 0; i -= 1) {
-            if (this.birds.get(i).isMarkedForRemoval()) {
-                this.birds.remove(i);
+        for (int i = this.getBirds().size() - 1; i >= 0; i -= 1) {
+            if (this.getBirds().get(i).isMarkedForRemoval()) {
+                this.getBirds().remove(i);
             }
         }
     }
@@ -140,7 +140,7 @@ public class EnemyManager implements Tickable, Interactable, RenderableGroup {
      * @param spawner the current bird spawner
      */
     public void add(Spawner spawner) {
-        this.spawners.add(spawner);
+        this.getSpawners().add(spawner);
     }
 
     /**
@@ -150,8 +150,8 @@ public class EnemyManager implements Tickable, Interactable, RenderableGroup {
      * @return the magpie
      */
     public Magpie mkM(Player player) {
-        final Magpie magpie = new Magpie(this.spawnX, this.spawnY, player);
-        this.birds.add(magpie);
+        final Magpie magpie = new Magpie(this.getSpawnX(), this.getSpawnY(), player);
+        this.getBirds().add(magpie);
         return magpie;
     }
 
@@ -183,10 +183,10 @@ public class EnemyManager implements Tickable, Interactable, RenderableGroup {
     @Override
     public void tick(EngineState state, GameState game) {
         this.cleanup();
-        for (Spawner spawner : this.spawners) {
+        for (Spawner spawner : getSpawners()) {
             spawner.tick(state, game);
         }
-        for (Enemy bird : birds) {
+        for (Enemy bird : getBirds()) {
             bird.tick(state, game);
         }
     }
@@ -198,7 +198,7 @@ public class EnemyManager implements Tickable, Interactable, RenderableGroup {
      */
     public ArrayList<Magpie> getMagpies() {
         final ArrayList<Magpie> magpies = new ArrayList<>();
-        for (Enemy bird : birds) {
+        for (Enemy bird : getBirds()) {
             if (bird instanceof Magpie temp) {
                 magpies.add(temp);
             }
@@ -212,7 +212,7 @@ public class EnemyManager implements Tickable, Interactable, RenderableGroup {
      * @return the a ll
      */
     public ArrayList<Enemy> getAll() {
-        return this.birds;
+        return this.getBirds();
     }
 
     /**
@@ -225,6 +225,7 @@ public class EnemyManager implements Tickable, Interactable, RenderableGroup {
      */
     @Override
     public void interact(EngineState state, GameState game) {
+        cleanup();
     }
 
     @Override
