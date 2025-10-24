@@ -74,8 +74,7 @@ public class WorldBuilder {
 
             if (currentRow.length != numberOfTiles) {
                 throw new WorldLoadException(
-                        "Expected "
-                                + numberOfTiles
+                        "Expected " + numberOfTiles
                                 + " characters to match the given dimensions but got "
                                 + currentRow.length, row);
             }
