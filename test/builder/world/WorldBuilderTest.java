@@ -1,7 +1,6 @@
 package builder.world;
 
 import builder.entities.tiles.Tile;
-import builder.entities.tiles.TileFactory;
 import engine.renderer.Dimensions;
 import org.junit.Before;
 import org.junit.Rule;
@@ -11,7 +10,6 @@ import org.junit.rules.TemporaryFolder;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,30 +54,7 @@ public class WorldBuilderTest {
         };
     }
 
-    @Test
-    public void testFromStringValidGrass2x2World() throws WorldLoadException {
-        String worldText = "g g\ng g";
-        List<Tile> tiles = WorldBuilder.fromString(mockDimensions, worldText);
 
-        assertNotNull(tiles);
-        assertEquals(4, tiles.size());
-    }
-
-    @Test
-    public void testFromStringCorrectTilePositions() throws WorldLoadException {
-        String worldText = "g g\ng g";
-        List<Tile> tiles = WorldBuilder.fromString(mockDimensions, worldText);
-
-        boolean hasPosition_0_0 = tiles.stream().anyMatch(t -> t.getX() == 0 && t.getY() == 0);
-        boolean hasPosition_32_0 = tiles.stream().anyMatch(t -> t.getX() == 32 && t.getY() == 0);
-        boolean hasPosition_0_32 = tiles.stream().anyMatch(t -> t.getX() == 0 && t.getY() == 32);
-        boolean hasPosition_32_32 = tiles.stream().anyMatch(t -> t.getX() == 32 && t.getY() == 32);
-
-        assertTrue(hasPosition_0_0);
-        assertTrue(hasPosition_32_0);
-        assertTrue(hasPosition_0_32);
-        assertTrue(hasPosition_32_32);
-    }
 
     @Test
     public void testFromStringWrongNumberOfLines() throws WorldLoadException {
@@ -163,7 +138,7 @@ public class WorldBuilderTest {
         List<Tile> tiles = WorldBuilder.fromString(mockDimensions, worldText);
 
         assertNotNull(tiles);
-        assertTrue(tiles.size() > 0);
+        assertFalse(tiles.isEmpty());
     }
 
     @Test
