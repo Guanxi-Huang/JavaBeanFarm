@@ -1,4 +1,37 @@
-Document your refactoring choices here. Delete this file if you choose to use a PDF or txt file format instead.
+# JavaBeanFarm
+
+## VS Code setup and current changes
+
+The project uses the installed Microsoft JDK 21 and the JAR files in `lib`.
+VS Code settings define source folders, output, libraries, and the test working directory.
+Press F5 and select `Run JavaBeanFarm` to start the game.
+Use `Tasks: Run Task` to select `Build JavaBeanFarm` or `Test JavaBeanFarm`.
+
+Run these commands from a PowerShell terminal in the project folder:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/java.ps1 build
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/java.ps1 run
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/java.ps1 test
+```
+
+The latest changes preserve the existing design for the three required birds.
+The unfinished Cockatoo extension and Magpie water behaviour were removed following the user's decision.
+EagleSpawner delegates registration to EnemyManager, preventing duplicate entries and repeated ticks.
+Pigeon and PigeonSpawner update the best distance when choosing the nearest cabbage.
+OverlayBuilder bounds its search by the number of lines, so missing or incomplete sections report IOException.
+These small corrections reuse existing methods instead of adding another implementation.
+
+WorldBuilder unit test maps now use one character per tile, matching the documented format.
+The supplied system tests under `test/scenarios` were not edited.
+Four regression tests verify exception types, eagle registration and position, and cabbage selection.
+The earlier suite passed with 480 tests, and a brief desktop launch created the game window without stderr output.
+Additional feature verification now runs 519 tests, with 511 passes and 8 failures.
+See [FEATURE-TEST-RESULTS.md](FEATURE-TEST-RESULTS.md) for the confirmed behaviour defects and coverage limits.
+The course Checkstyle scan reported 14 existing warnings in other source files, mostly Javadoc and indentation.
+Some older unit tests only check non-null values or successful execution, so they do not prove full behavioural coverage.
+
+The earlier refactoring notes are retained below.
 
 ## Refactoring Journey
 
