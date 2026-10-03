@@ -32,6 +32,6 @@ public class EagleSpawner extends SetSpawner {
     protected void spawn(GameState game) {
         game.getEnemies().setSpawnX(getX());
         game.getEnemies().setSpawnY(getY());
-        game.getEnemies().getBirds().add(game.getEnemies().mkE(game.getPlayer()));
+        game.getEnemies().mkE(game.getPlayer());
     }
 }

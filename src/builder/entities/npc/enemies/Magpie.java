@@ -8,7 +8,6 @@ import engine.EngineState;
 import engine.art.sprites.SpriteGroup;
 import engine.game.HasPosition;
 import engine.timing.FixedTimer;
-import engine.timing.RepeatingTimer;
 
 /**
  * The type Magpie.
@@ -17,8 +16,6 @@ public class Magpie extends Enemy {
 
     private static final SpriteGroup art = SpriteGallery.magpie;
     private int coins = 0;
-
-    private final RepeatingTimer directionalUpdateTimer = new RepeatingTimer(30);
 
     /**
      * Instantiates a new Magpie.
@@ -41,7 +38,7 @@ public class Magpie extends Enemy {
             initializeDirection = 90;
         }
         this.setDirection(initializeDirection);
-    }    
+    }
 
     /**
      * Gets coins.
@@ -63,8 +60,6 @@ public class Magpie extends Enemy {
 
     @Override
     public void updateAttack(EngineState engine, GameState game) {
-        this.directionalUpdateTimer.tick();
-
         Player player = game.getPlayer();
         if (isClosed(player, engine) && game.getInventory().getCoins() > 0 && isAttacking()) {
             game.getInventory().addCoins(-1);

@@ -56,6 +56,7 @@ public class PigeonSpawner extends SetSpawner {
             for (Tile tile : tiles) {
                 if (this.distanceFrom(tile) < distance) {
                     closest = tile;
+                    distance = this.distanceFrom(tile);
                 }
             }
 

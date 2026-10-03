@@ -37,7 +37,7 @@ public class OverlayBuilder {
         final String[] lines = contents.split("\n");
         boolean collectingLines = false;
         final List<String> section = new ArrayList<>();
-        for (int i = 0; i < contents.length(); i++) {
+        for (int i = 0; i < lines.length; i++) {
             if (collectingLines && lines[i].toLowerCase().trim().equals("end;")) {
                 return section;
             }

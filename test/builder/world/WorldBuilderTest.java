@@ -58,7 +58,7 @@ public class WorldBuilderTest {
 
     @Test
     public void testFromStringWrongNumberOfLines() throws WorldLoadException {
-        String worldText = "g g\ng g\ng g"; // 3 lines instead of 2
+        String worldText = "gg\ngg\ngg"; // 3 lines instead of 2
 
         try {
             WorldBuilder.fromString(mockDimensions, worldText);
@@ -70,7 +70,7 @@ public class WorldBuilderTest {
 
     @Test
     public void testFromStringWrongNumberOfColumns() throws WorldLoadException {
-        String worldText = "g g g\ng g";
+        String worldText = "ggg\ngg";
         try {
             WorldBuilder.fromString(mockDimensions, worldText);
             fail("Should throw WorldLoadException for wrong number of columns");
@@ -81,7 +81,7 @@ public class WorldBuilderTest {
 
     @Test
     public void testFromStringErrorMessageContainsLineInfo() throws WorldLoadException {
-        String worldText = "g g\ng ?";
+        String worldText = "gg\ng?";
         try {
             WorldBuilder.fromString(mockDimensions, worldText);
             fail("Should throw WorldLoadException");
@@ -93,7 +93,7 @@ public class WorldBuilderTest {
 
     @Test
     public void testFromStringErrorMessageContainsColumnInfo() throws WorldLoadException {
-        String worldText = "g g\ng ?";  // Invalid symbol at column 1 (index 1)
+        String worldText = "gg\ng?";  // Invalid symbol at column 1 (index 1)
 
         try {
             WorldBuilder.fromString(mockDimensions, worldText);
@@ -126,7 +126,7 @@ public class WorldBuilderTest {
 
     @Test
     public void testFromStringHandlesWhitespace() throws WorldLoadException {
-        String worldText = "  g g  \n  g g  "; // Extra spaces should be trimmed
+        String worldText = "  gg  \n  gg  "; // Extra spaces should be trimmed
         List<Tile> tiles = WorldBuilder.fromString(mockDimensions, worldText);
 
         assertEquals(4, tiles.size());
@@ -134,7 +134,7 @@ public class WorldBuilderTest {
 
     @Test
     public void testFromStringMultipleDifferentTiles() throws WorldLoadException {
-        String worldText = "g g\ng g";
+        String worldText = "gg\ngg";
         List<Tile> tiles = WorldBuilder.fromString(mockDimensions, worldText);
 
         assertNotNull(tiles);
@@ -217,7 +217,7 @@ public class WorldBuilderTest {
     @Test
     public void testFromFileValidFile() throws IOException, WorldLoadException {
         File file = tempFolder.newFile("test_world.txt");
-        String content = "g g\ng g";
+        String content = "gg\ngg";
         Files.write(file.toPath(), content.getBytes());
 
         BeanWorld world = WorldBuilder.fromFile(mockDimensions, file.getAbsolutePath());
@@ -242,7 +242,7 @@ public class WorldBuilderTest {
     @Test
     public void testFromFileInvalidWorldEncoding() throws IOException {
         File file = tempFolder.newFile("invalid_world.txt");
-        String content = "g g\ng g\ng g"; // Too many lines
+        String content = "gg\ngg\ngg"; // Too many lines
         Files.write(file.toPath(), content.getBytes());
 
         try {
@@ -256,7 +256,7 @@ public class WorldBuilderTest {
     @Test
     public void testFromFileWithValidTiles() throws IOException, WorldLoadException {
         File file = tempFolder.newFile("valid_world.txt");
-        String content = "g g\ng g";
+        String content = "gg\ngg";
         Files.write(file.toPath(), content.getBytes());
 
         BeanWorld world = WorldBuilder.fromFile(mockDimensions, file.getAbsolutePath());
@@ -283,7 +283,6 @@ public class WorldBuilderTest {
         for (int i = 0; i < 4; i++) {
             if (i > 0) sb.append("\n");
             for (int j = 0; j < 4; j++) {
-                if (j > 0) sb.append(" ");
                 sb.append("g");
             }
         }
@@ -316,7 +315,7 @@ public class WorldBuilderTest {
 
     @Test
     public void testFromStringMissingEndLine() throws WorldLoadException {
-        String worldText = "g g"; // Only 1 line instead of 2
+        String worldText = "gg"; // Only 1 line instead of 2
 
         try {
             WorldBuilder.fromString(mockDimensions, worldText);

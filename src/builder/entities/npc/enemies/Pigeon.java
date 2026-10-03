@@ -1,11 +1,9 @@
 package builder.entities.npc.enemies;
 
-import builder.GameState;
 import builder.entities.resources.Cabbage;
 import builder.entities.tiles.Tile;
 import builder.ui.SpriteGallery;
 
-import engine.EngineState;
 import engine.art.sprites.SpriteGroup;
 import engine.game.Entity;
 import engine.game.HasPosition;
@@ -69,6 +67,7 @@ public class Pigeon extends Enemy {
             for (Tile tile : tiles) {
                 if (this.distanceFrom(tile) < distance) {
                     closest = tile;
+                    distance = this.distanceFrom(tile);
                 }
             }
             setTrackedTarget(closest);

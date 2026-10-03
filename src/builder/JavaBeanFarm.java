@@ -114,7 +114,6 @@ public class JavaBeanFarm implements Game {
             this.enemies.add(new PigeonSpawner(details.getX(),
                     details.getY(), details.getDuration()));
         }
-
         final List<CabbageDetails> cabbageSpawnPoints =
                 OverlayBuilder.getCabbageSpawnDetailsFromString(detailsContent);
         for (CabbageDetails details : cabbageSpawnPoints) { // HACK - can I improve this?
