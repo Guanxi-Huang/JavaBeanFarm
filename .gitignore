@@ -9,3 +9,8 @@ template/
 .DS_Store
 __MACOSX/
 lib/mockito-core-5.12.0.jar
+src/builder/entities/npc/enemies/Cockatoo.java
+src/builder/entities/npc/enemies/EnemyManager.java
+src/builder/entities/npc/enemies/Magpie.java
+src/builder/entities/npc/spawners/CockatooSpawner.java
+src/builder/entities/npc/enemies/EnemyManager.java
